@@ -24,7 +24,6 @@ interface ProductRequest {
 export async function POST(request: Request) {
   try {
     const requestData: ProductRequest = await request.json();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { name, price, html, checkbox, detailImage,imageDefult, selectedImageId, count,countproduct,priceOffer } = requestData;
     // eslint-disable-next-line prefer-const
     let checkedit = checkbox === "انتشار";

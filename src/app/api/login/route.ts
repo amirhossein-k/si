@@ -40,8 +40,7 @@ console.log(user)
       email: user.email,
     };
     console.log(session,'seesion')
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-const
-        let guestSession = await getGuestSession();
+    const guestSession = await getGuestSession();
     
    if(guestSession){
     await prisma.user.update({

@@ -7,7 +7,6 @@ import { useState } from "react"
 
 
 const Cards = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [id, setId] = useState<number>(1)
   const [{ data: resultTodo, isPending: pend1 }, result2] = useQueries({
     queries: [

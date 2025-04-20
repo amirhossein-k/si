@@ -14,7 +14,6 @@ export default function FitstItem({category}: {category: CATEGORYLayoutITEM[]}) 
   const { setLoadingNav} = useContext(UserContext);
 
     // const { setLoadingNav } = useUserContext();
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const [isPending,startTransition] = useTransition()  
     
       const router = useRouter()

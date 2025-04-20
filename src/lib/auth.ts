@@ -64,7 +64,6 @@ export async function destroySession() { // حذف async
 
 
 // تابع createSession متغیر
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 // export async function createSessionDynamic(data: any,sessionName:string) { // حذف async
 //   (await cookies()).set(`${sessionName}`, JSON.stringify(data), {
 //     httpOnly: true,
@@ -73,7 +72,6 @@ export async function destroySession() { // حذف async
 //     path: '/',
 //   });
 // }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 // export async function createSessionDynamic(data: any, sessionName: string): Promise<boolean> {
 //   try {
 //     (await cookies()).set(`${sessionName}`, JSON.stringify(data), {
