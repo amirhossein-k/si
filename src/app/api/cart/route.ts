@@ -277,7 +277,7 @@ export async function DELETE(req: NextRequest) {
 }
 
 
-export async function addToCartGuest(
+ async function addToCartGuest(
   productId: string,
   quantity: number,
   userId: string,
