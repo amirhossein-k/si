@@ -1,4 +1,4 @@
-// src/app/(public)/products/[slug]/page.tsx
+// src/app/(public)/products/[id]/page.tsx
 import { notFound } from "next/navigation";
 // import { Post } from '@/app/(public)/products/page';
 import Link from "next/link";
@@ -24,9 +24,14 @@ async function getProduct(id: string): Promise<POSTTYPE | null> {
   }
 }
 
-export default async function ProductPage({ params }: { params: { id: string } }) {
-  const product = await getProduct(params.id);
-  if (!product) notFound();
+export default async function ProductPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const product = await getProduct(id);
+    if (!product) notFound();
 
   // if (!product) return notFound(); // اگر محصول وجود نداشت، صفحه 404 نمایش داده شود
   // اعتبارسنجی تصاویر
