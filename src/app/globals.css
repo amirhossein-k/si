@@ -1,0 +1,212 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+  font-family: "Rocher";
+  src: url(https://assets.codepen.io/9632/RocherColorGX.woff2);
+}
+/* :root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+} */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    background-color: #f4f5f7;
+    /* background: linear-gradient(to right, #040407, #06090f, #000000);  */
+  }
+}
+.shadow_img {
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
+} /* body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+} */
+
+.loader-tailwind {
+  width: 60px;
+  aspect-ratio: 1.154;
+  --c: #0000 0deg, #25b09b 2deg 59deg, #0000 61deg;
+  background: conic-gradient(from 149deg at top, var(--c)) top,
+    conic-gradient(from 149deg at top, var(--c)) bottom right,
+    conic-gradient(from -31deg at bottom, var(--c)) bottom,
+    conic-gradient(from 149deg at top, var(--c)) bottom left;
+  background-size: 50% 50%;
+  background-repeat: no-repeat;
+  animation: l37 1s infinite;
+}
+
+@keyframes l37 {
+  80%,
+  100% {
+    background-position: bottom right, bottom left, bottom, top;
+  }
+}
+
+.preview-content ul {
+  list-style-type: disc; /* نوع بولت */
+  padding-left: 20px;
+}
+.preview-content p {
+  @apply text-lg;
+}
+.preview-content img {
+  @apply rounded-md object-cover;
+}
+.preview-content ol {
+  list-style-type: decimal; /* شماره‌گذاری */
+  padding-left: 20px;
+}
+
+.preview-content li {
+  margin-bottom: 4px;
+  font-weight: 500;
+  margin-right: 5px;
+  color: #333; /* رنگ متن لیست */
+}
+
+.preview-content li::marker {
+  /* color: #ff6600; رنگ علامت‌های لیست */
+  @apply mx-5 text-red-500
+  /* font-size: 1.2em; */;
+}
+
+.text {
+  display: inline-block;
+  font-size: 15vmin;
+  line-height: 1.205;
+}
+
+.text__first,
+.text__second {
+  position: relative;
+}
+
+.text__word {
+  opacity: 0;
+}
+
+.text__first-bg,
+.text__second-bg {
+  display: block;
+  /* width: 100%;
+  height: 100%; */
+  width: 80%;
+  height: 15%;
+  position: absolute;
+  backdrop-filter: blur(2px);
+  /* right: -650px; */
+  /* top: 10px; */
+  z-index: 100;
+  /* transform-origin: left; */
+  /* transform: scaleX(0); */
+  /* transform: rotate(90deg); */
+}
+
+.text__first-bg {
+  /* background-color: #1edb4d23; */
+}
+
+.text__second-bg {
+  background-color: #f06543;
+}
+
+.text__second {
+  margin-left: 15vmin;
+}
+
+.restart {
+  position: absolute;
+  font-size: 12px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  border: none;
+  border-bottom: 1px dotted grey;
+  padding: 0;
+  margin: 0 auto 2%;
+  cursor: pointer;
+  color: grey;
+}
+
+/* .swiper .swiper-button-prev {
+  color: #004ef6 !important;
+}
+.swiper .swiper-button-next {
+  color: #004ef6 !important;
+}
+.arrow-my {
+  color: #4cacff;
+} */
+.swiper-wrapper {
+  gap: 5px;
+}
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+/*  */
+.swiper-button-prev {
+  color: rgb(230, 30, 230) !important;
+  right: 0px !important;
+
+  height: 68px !important;
+  display: none !important;
+}
+
+.swiper-button-next {
+  color: rgb(230, 30, 230) !important;
+
+  height: 68px !important;
+  display: none !important;
+}
+/* .swiper-pagination {
+  position: absolute;
+  display: flex;
+  width: 100% !important;
+  height: fit-content;
+  top: 280px !important;
+  left: 0;
+} */
+.swiper-pagination-bullet {
+  background: #09ff01 !important;
+  border-color: #3cb025 !important;
+  box-shadow: rgb(9, 231, 102) 0px 0px 8px 4px !important;
+}
+/* .swiper-pagination-bullet  */
+@layer components {
+  .custom-container {
+    @apply max-w-7xl mx-auto px-4;
+  }
+
+  .slider-height-2 {
+    height: 600px;
+  }
+
+  .swiper-pagination-bullet {
+    @apply w-3 h-3 bg-white opacity-50;
+  }
+
+  .swiper-pagination-bullet-active {
+    @apply opacity-100;
+  }
+}
+/* برای جدول یک در میون رنگ ردیف مشخص میکنی */
+/* [data-odd="true"] {
+  background-color: blue !important;
+} */
+
+/*  */
+[data-slot="thumb"] {
+  background-color: blue !important;
+}
+[data-slot="filler"] {
+  background-color: blue !important;
+}
+[data-slot="track"] {
+  background-color: rgb(0, 255, 55) !important;
+}
