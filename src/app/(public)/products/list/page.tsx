@@ -1,4 +1,4 @@
-// app/shop/page.tsx
+// src\app\(public)\products\list\page.tsx
 import { GetProduct, GetProductParams } from "@/../actions/GetProductListOrder";
 import FilterSidebar from "@/components/FilterSidebar/FilterSidebar";
 import CurrentPath from "@/components/path/CurrentPath";
@@ -10,26 +10,33 @@ import Spinners from "@/components/products/Spinner";
 // import { POSTTYPE } from '@/utils/types';
 import { Metadata } from "next";
 
-interface ShopPageProps {
-  searchParams: {
-    category?: string;
-    sort?: "new" | "old" | "cheap" | "expensive";
-    page?: string;
-    minPrice?: string;
-    maxPrice?: string;
-    count?:  string; // دریافت به صورت رشته از URL;
-  };
+
+interface SearchParams {
+  category?: string;
+  sort?: 'new' | 'old' | 'cheap' | 'expensive';
+  page?: string;
+  minPrice?: string;
+  maxPrice?: string;
+  count?: string;
 }
 
 export const metadata: Metadata = {
   title: "صفحه فروشگاه",
 };
 
-export default async function ShopPage({ searchParams }: ShopPageProps) {
+export default async function ShopPage({ searchParams }: {
+  searchParams: Promise<SearchParams>;
+}) {
   // اضافه کردن await برای حل مشکل "sync-dynamic-apis"
 
-  const { category, sort, page, minPrice, maxPrice, count } =
-    await Promise.resolve(searchParams);
+  const {
+    category,
+    sort,
+    page,
+    minPrice,
+    maxPrice,
+    count,
+  } = await searchParams;
     console.log(count,'avalibale')
   const currentPage = page ? parseInt(page, 10) : 1;
   const limit = 9;
