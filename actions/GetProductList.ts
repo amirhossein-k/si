@@ -1,3 +1,4 @@
+// actions\GetProductList.ts
 "use server";
 import prisma from '@/lib/db'
 import { POSTTYPE } from '@/utils/types';
