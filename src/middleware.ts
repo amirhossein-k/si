@@ -57,9 +57,9 @@ export async function middleware(request: NextRequest) {
   const publicPaths = ['/login', '/register'];
 
   // اگر لاگین کرده و سعی کند به صفحات عمومی دسترسی یابد
-  if (session && publicPaths.includes(request.nextUrl.pathname)) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
-  }
+  // if (session && publicPaths.includes(request.nextUrl.pathname)) {
+  //   return NextResponse.redirect(new URL('/dashboard', request.url));
+  // }
   // اگر لاگین نکرده و سعی کند به صفحه خصوصی دسترسی یابد
   if (!session && !publicPaths.includes(request.nextUrl.pathname)) {
     return NextResponse.redirect(new URL('/login', request.url));

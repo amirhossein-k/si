@@ -8,6 +8,7 @@ export interface USERTYPE {
     isVerfied: boolean;
     listordershop: string[];
     address: ADRESS[];
+    admin:   boolean
   }
  export interface PHOTO {
     id:string

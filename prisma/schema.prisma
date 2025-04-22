@@ -22,6 +22,7 @@ model User {
   isVerfied     Boolean  @default(false)
   listordershop String[]
   address       Adress[]
+  admin         Boolean  @default(false)
   createdAt     DateTime @default(now())
 }
 

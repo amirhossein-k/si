@@ -22,7 +22,7 @@ const Navbar = () => {
     // const [lenghtFavorite, setLenghtFavorite] = useState();
 
       const {
-        //  user,
+         user,
       setIsLoading} = useContext(UserContext);
       const [isPending, startTransition] = useTransition();
       const router = useRouter();
@@ -67,7 +67,7 @@ const Navbar = () => {
               onClick={() => {
                 setIsLoading(true);
                 startTransition(() => {
-                  router.push(`/register`);
+                  router.push(user ? `/profile/${user.id}` :'/register' );
                 });
               }}
             >
