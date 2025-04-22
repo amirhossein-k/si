@@ -32,7 +32,7 @@ const logout = useLogout()
     <div className="flex flex-row justify-around gap-3">
     <Link href={'/'} className='border w-full rounded-md py-2 text-center shadow-md hover:bg-sky-300'>صفحه اصلی</Link>
     <Link href={'/dashboard/addproduct'} className='border w-full rounded-md py-2 text-center shadow-md hover:bg-sky-300'>اضافه کردن محصول</Link>
-    <Link href={'/list'} className='border w-full rounded-md py-2 text-center shadow-md hover:bg-sky-300'>لیست محصولات</Link>
+    <Link href={'/dashboard/list'} className='border w-full rounded-md py-2 text-center shadow-md hover:bg-sky-300'>لیست محصولات</Link>
     </div>
     {/* <Link href={'/dashboard/upload'}>عکس</Link> */}
     {/* <Link href={'/dashboard/'}>ادرس</Link> */}
