@@ -54,7 +54,7 @@ export default async function ProductPage({
           <ImagesProduct images={safeImages} />
         </div>
 
-        <div className="body bg-red-400 p-2 w-full xl:w-[60%]  flex flex-col gap-3">
+        <div className="body  p-2 w-full xl:w-[60%]  flex flex-col gap-3">
 
           <h1 className="text-2xl font-bold">{product.title}</h1>
 

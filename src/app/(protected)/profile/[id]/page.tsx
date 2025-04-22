@@ -12,8 +12,10 @@ const Profilepage = () => {
     <p>آی دی: {user.id}</p>
     <p>ایمیل: {user.email}</p>
     <p>نام: {user.name}</p>
-    <Link href={`/profile/${user.id}/address`} className='text-lg text-red-500' >ادرس</Link>
-    <Link href={`/dashboard`} className='text-lg text-red-500' >داشبورد</Link>
+   <div className="flex  gap-3">
+   <Link href={`/profile/${user.id}/address`} className='text-lg text-red-500' >ادرس</Link>
+   <Link href={`/dashboard`} className='text-lg text-red-500' >داشبورد</Link>
+   </div>
     {/* سایر اطلاعات کاربر */}
   </div>
   )
