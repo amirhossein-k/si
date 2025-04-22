@@ -1,7 +1,6 @@
 // app/dashboard/page.tsx
 'use client';
 import ConfirmationModal from '@/app/components/ConfirmationModal';
-import Image from 'next/image';
 import Link from 'next/link';
 // import {  useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -28,14 +27,17 @@ const logout = useLogout()
   //   }
   // }
 
-  return <div className='flex  flex-col gap-2'>
-    <h1>Dashboard Content</h1>
-    <Link href={'/'}>صفحه اصلی</Link>
-    <Link href={'/dashboard/addproduct'}>اضافه کردن محصول</Link>
-    <Link href={'/dashboard/upload'}>عکس</Link>
+  return <div className='flex  flex-col gap-2' dir='rtl'>
+    <h1 className='text-center shadow-lg py-2 text-lg font-bold'>صفحه مدیریت</h1>
+    <div className="flex flex-row justify-around gap-3">
+    <Link href={'/'} className='border w-full rounded-md py-2 text-center shadow-md hover:bg-sky-300'>صفحه اصلی</Link>
+    <Link href={'/dashboard/addproduct'} className='border w-full rounded-md py-2 text-center shadow-md hover:bg-sky-300'>اضافه کردن محصول</Link>
+    <Link href={'/list'} className='border w-full rounded-md py-2 text-center shadow-md hover:bg-sky-300'>لیست محصولات</Link>
+    </div>
+    {/* <Link href={'/dashboard/upload'}>عکس</Link> */}
     {/* <Link href={'/dashboard/'}>ادرس</Link> */}
 
-    <button onClick={()=>setShowModal(true)}>خروج از حساب کاربری</button>
+    <button onClick={()=>setShowModal(true)} className='border w-[50%] mx-auto rounded-md py-2 text-center shadow-md hover:bg-sky-300'>خروج از حساب کاربری</button>
     <ConfirmationModal 
     isOpen={showModal}
     onConfirm={()=>{
@@ -44,8 +46,6 @@ const logout = useLogout()
       logout.mutate()
     }}
     onCancel={()=>setShowModal(false)}/>
-    <Image alt='' width={500}
-      height={300}
-      className="w-full h-64 object-cover rounded-lg border" src={'https://c961427.parspack.net/c961427/uploads/1740128787471-download.jpg'}/>
+    
   </div>;
 }
