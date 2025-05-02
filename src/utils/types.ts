@@ -26,14 +26,20 @@ export interface USERTYPE {
     title:string
     published :boolean
     price:number
-    count? :number
+    count :number
     countproduct : number
     priceOffer : number
     author? :USERTYPE
     authorId :string
     createdAt :Date
-  updatedAt:Date
-  productImage: PHOTO[]
+    updatedAt:Date
+    productImage: PHOTO[]
+    categoryList: Category[]
+  }
+
+  export interface Category{
+    id: string
+    category :string
   }
 
  export interface ADRESS {
@@ -47,7 +53,7 @@ export interface USERTYPE {
 
 export interface CATEGORYLayout{
   id:string
- item?:CATEGORYLayoutITEM[]
+  item?:CATEGORYLayoutITEM[]
   layout:string
   item2?:CATEGORYLayoutITEM[]
 

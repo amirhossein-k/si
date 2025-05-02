@@ -31,7 +31,7 @@ export async function GetProductDashboard({
         
         skip,
         take: limit,
-        include: { productImage: true },
+        include: { productImage: true,categoryList:true },
       }),
       prisma.post.count({ where }),
     ]);

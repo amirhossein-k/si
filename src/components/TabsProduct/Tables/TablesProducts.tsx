@@ -25,6 +25,9 @@ export interface DashboardProduct {
 
 interface TablesProductsProps {
   products: DashboardProduct[];
+  onView: (p: DashboardProduct) => void;
+  onEdit: (p: DashboardProduct) => void;
+  onDelete: (p: DashboardProduct) => void;
 }
 
 // ستون‌های جدول
@@ -43,7 +46,7 @@ const publishedColorMap: Record<'true' | 'false', 'success' | 'danger'> = {
   false: 'danger',
 };
 
-export default function TablesProducts({ products }: TablesProductsProps) {
+export default function TablesProducts({ products, onView, onEdit, onDelete }: TablesProductsProps) {
   const renderCell = React.useCallback(
     (
       product: DashboardProduct,
@@ -53,13 +56,13 @@ export default function TablesProducts({ products }: TablesProductsProps) {
         return (
           <div className="flex items-center gap-2">
             <Tooltip content="جزئیات">
-              <span className="cursor-pointer"><i className="bi bi-eye"></i></span>
+              <span className="cursor-pointer" onClick={() => onView(product)}><i className="bi bi-eye"></i></span>
             </Tooltip>
             <Tooltip content="ویرایش">
-              <span className="cursor-pointer"><i className="bi bi-pencil"></i></span>
+              <span className="cursor-pointer"  onClick={() => onEdit(product)}><i className="bi bi-pencil"></i></span>
             </Tooltip>
             <Tooltip content="حذف" color="danger">
-              <span className="cursor-pointer"><i className="bi bi-trash"></i></span>
+              <span className="cursor-pointer"  onClick={() => onDelete(product)}><i className="bi bi-trash"></i></span>
             </Tooltip>
           </div>
         );

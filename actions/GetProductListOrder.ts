@@ -77,7 +77,7 @@ export async function GetProduct({
         orderBy,
         skip,
         take: limit,
-        include: { productImage: true },
+        include: { productImage: true,categoryList:true },
       }),
       prisma.post.count({ where }),
     ]);

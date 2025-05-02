@@ -1,21 +1,23 @@
 // src\app\(protected)\dashboard\list\page.tsx
 "use server";
-import ProductTable from "@/components/TabsProduct/Tables/TablesProducts";
 import React from "react";
 import {
   GetProductDashboard,
   GetProductParams,
 } from "../../../../../actions/GetProductListDashboard";
+import TablesProductsClient from '@/components/TabsProduct/Tables/TablesProductsClient';
 
 interface SearchParams {
   page?: string;
+  edit?:boolean
 }
 export default async function Listpage({
   searchParams,
 }: {
   searchParams: Promise<SearchParams>;
 }) {
-  const { page } = await searchParams;
+  
+  const { page,edit } = await searchParams;
   const currentPage = page ? parseInt(page, 10) : 1;
   const limit = 9;
 
@@ -30,7 +32,7 @@ export default async function Listpage({
         لیست محصولات
       </div>
       <div className="body w-full">
-        <ProductTable   products={products}/>
+      <TablesProductsClient products={products} edit={edit|| false} />
       </div>
     </div>
   );

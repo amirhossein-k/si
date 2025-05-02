@@ -8,9 +8,17 @@ interface ImageObject {
   url: string;
   id: string;
 }
+interface ImageEdit {
+  defaultImage: boolean;
+  childImage: string;
+  fileKey:string
+  id: string;
+}
 interface UploadProps {
   detailImage: ImageObject[];
   setDetailImage: React.Dispatch<React.SetStateAction<ImageObject[]>>;
+  edit:boolean
+  imageEdit?: ImageEdit[]
 }
 
 import { useState } from 'react';
@@ -18,7 +26,7 @@ import { useState } from 'react';
 //   detailImage: { key: string; url: string };
 //   setDetailImage: (image: { key: string; url: string }) => void;
 // }
-export default function Upload({ setDetailImage }: UploadProps ) {
+export default function Upload({ setDetailImage,edit,imageEdit }: UploadProps ) {
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -100,7 +108,20 @@ export default function Upload({ setDetailImage }: UploadProps ) {
             />
           </div>
         )}
-
+        {
+          edit && (
+            <div className="mt-4 flex gap-2">
+            {imageEdit?.map((photo)=>(
+              <img
+               key={photo.id}
+              src={photo.childImage}
+              alt="پیشنمایش"
+              className={`w-full h-64 object-cover rounded-lg border ${photo.defaultImage ? 'border-blue-400 border-3' :""}`}
+            />
+            ))}
+          </div>
+          )
+        }
         <button
           // type="submit"
           onClick={handleUpload}

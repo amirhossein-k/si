@@ -47,8 +47,16 @@ model Post {
   published    Boolean        @default(false)
   author       User           @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   authorId     String         @db.ObjectId
+  categoryList CategoryList[]
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
+}
+
+model CategoryList {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  category    String
+  CategoryOwn Post   @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ownerId     String @db.ObjectId
 }
 
 model ProductImage {
@@ -60,9 +68,4 @@ model ProductImage {
   ownerId      String? @db.ObjectId
   //   Products Products? @relation(fields: [productId],references: [id],onDelete: Cascade, onUpdate: Cascade) 
   //   productId String?
-}
-
-model CategoryList {
-  id             String @id @default(auto()) @map("_id") @db.ObjectId
-  category_Title String
 }

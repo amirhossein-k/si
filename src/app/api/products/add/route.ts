@@ -19,16 +19,17 @@ interface ProductRequest {
   count: number;
   countproduct: number;
   priceOffer: number;
+  category:string[]
 }
 
 export async function POST(request: Request) {
   try {
     const requestData: ProductRequest = await request.json();
-    const { name, price, html, checkbox, detailImage,imageDefult, selectedImageId, count,countproduct,priceOffer } = requestData;
+    const { name, price, html, checkbox, detailImage,imageDefult, selectedImageId, count,countproduct,priceOffer,category } = requestData;
     // eslint-disable-next-line prefer-const
     let checkedit = checkbox === "انتشار";
     console.log('haaaaaaaaaaa')
-console.log(`${name}  || ${price} || ${html} || ${checkbox} ===${checkedit} || ${detailImage} ||${imageDefult} || ${selectedImageId} || ${count} || ${countproduct} || ${priceOffer}`)
+console.log(`${name}  || ${price} || ${html} || ${checkbox} ===${checkedit} || ${detailImage} ||${imageDefult} || ${selectedImageId} || ${count} || ${countproduct} || ${priceOffer} || ${category}`)
     // اعتبارسنجی فیلدهای اجباری
     if (!name || !price || !html) {
       return NextResponse.json(
@@ -56,7 +57,8 @@ console.log('before')
         authorId: session?.id,
         count,
         countproduct,
-        priceOffer
+        priceOffer,
+        
       },
       include: { author: true },
     });
@@ -84,6 +86,17 @@ console.log('before')
         });
       }
     }
+
+    // category
+    for(let i = 0; i<category.length;i++){
+      await prisma.categoryList.create({
+        data:{
+          category:category[i],
+          ownerId:newProduct.id
+        }
+      })
+    }
+    
 
     return NextResponse.json(
       { success: true, message: "پست جدید ذخیره شد" },
