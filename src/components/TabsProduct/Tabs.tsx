@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Tables from "./Tables/Tables";
 import Reviews from "./Reviews/Reviews";
 
-const Tabs = ({description}: {description:string | null}) => {
+const Tabs = ({description,id}: {description:string | null,id:string}) => {
   const [activeTab, setActiveTab] = useState("توضیحات");
 
   return (
@@ -51,7 +51,7 @@ const Tabs = ({description}: {description:string | null}) => {
         )}
         {activeTab === "نظرات" && (
           <div className="p-4 border border-gray-300">
-          <Reviews/>
+          <Reviews id={id}/>
           </div>
         )}
       </div>

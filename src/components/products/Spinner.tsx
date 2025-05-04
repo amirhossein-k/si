@@ -2,11 +2,17 @@
 import { useLoading } from "@/context/LoadingContext";
 import { UserContext } from "@/context/UserContext2";
 import { Spinner} from "@heroui/react";
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 
 const Spinners = () => {
     // const [isPending,startTransition] = useTransition()
-  const { user} = useContext(UserContext);
+  // const { user} = useContext(UserContext);
+  const { user, refreshUser } = useContext(UserContext);
+
+  // دریافت خودکار اطلاعات کاربر هنگام ورود به صفحه
+  useEffect(() => {
+    refreshUser();
+  }, [refreshUser]);
     const {isLoadingNavId} = useLoading()
     console.log(user,'ii')
   return (

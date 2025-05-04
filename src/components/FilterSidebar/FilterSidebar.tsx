@@ -2,8 +2,8 @@
 'use client';
 // import Link from 'next/link';
 import { useState, useEffect,useTransition  } from 'react';
-import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { Menu } from 'lucide-react';
 import { SortOption } from '@/../actions/GetProductListOrder';
@@ -42,7 +42,21 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ selectedCategory, selecte
 
   return (
     <>
-    
+<AnimatePresence>
+        {isPending && (
+          <motion.div
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -100, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed top-0 left-0 right-0 z-50 flex justify-center"
+          >
+            <div className="bg-blue-600 text-white px-6 py-3 rounded-b-lg shadow-lg">
+              منتظر بمانید...
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       {/* در حالت موبایل، دکمه نمایش فیلتر */}
       {!isDesktop && (
         <button 
@@ -85,7 +99,6 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ selectedCategory, selecte
                   className={selectedCategory === cat ? 'text-blue-600 font-semibold' : 'cursor-pointer w-full'}
                 >
                   {cat}
-                  {isPending && <span className="ml-2">Loading...</span>}
                   
                 
                   
@@ -95,6 +108,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ selectedCategory, selecte
             ))}
             </div>
           </ul>
+
           <PriceFilter selectedCategory={selectedCategory} selectedSort={selectedSort?.toString()} />
 
           <AvailableFilter selectedCategory={selectedCategory} selectedSort={selectedSort?.toString()}/>
@@ -104,6 +118,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ selectedCategory, selecte
       {/* حالت دسکتاپ: نمایش ثابت فیلتر */}
       {isDesktop && (
         <div className="bg-white shadow-lg p-4">
+
           <ul className="mb-4 parent-filter group">
            <FilterParent title_Filter="فیلتر  دسته بندی محصولات " />
            <div className="subtitle  group-hover:flex flex-col hidden p-2 w-full">
@@ -120,7 +135,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ selectedCategory, selecte
                   className={selectedCategory === cat ? 'text-blue-600 font-semibold' : 'cursor-pointer w-full'}
                 >
                   {cat}
-                  {isPending && <span className="ml-2">Loading...</span>}
+                  {/* {isPending && <span className="ml-2">Loading...</span>} */}
                 </button>
                 </div>
               </li>

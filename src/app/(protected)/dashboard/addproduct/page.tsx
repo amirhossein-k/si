@@ -8,10 +8,6 @@ import { handleChangeCheckbox } from '@/utils/handleChangeCheckbox';
 import CustomEditor from '@/components/textEditor/CustomEditor';
 import { Select, SelectItem } from "@heroui/react";
 
-// interface DETAILImage {
-//   key: string
-//   url: string
-// }
 
 interface ImageObject {
   key: string;
@@ -132,18 +128,6 @@ export default function AddProduct() {
 
 
 
-    // if (res.ok) {
-    //   router.push('/products');
-    // } else {
-    //   const data = await res.json();
-    //   setError(data.error || 'خطایی رخ داده است');
-    // }
-
-
-    // } catch (err) {
-    //   console.error('خطا در ارسال محصول:', err);
-    //   setError('خطا در ارتباط با سرور');
-    // }
   };
 
   const handleDefultImage = (img: ImageObject) => {

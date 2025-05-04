@@ -1,9 +1,7 @@
 //src\context\UserContext2.tsx
 "use client"
 
-import React, { createContext, useState, useEffect, ReactNode, useCallback
-  // , useContext 
-} from 'react';
+import React, { createContext, useState, useEffect, ReactNode, useCallback, useContext } from 'react';
 import { USERTYPE } from '@/utils/types';
 
 
@@ -46,11 +44,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     try {
       const res = await fetch('/api/cook', { 
         credentials: 'include',
-        cache: 'no-store' // غیرفعال کردن کش برای دریافت داده تازه
+        cache: 'no-store', // غیرفعال کردن کش برای دریافت داده تازه
       });
       
       if (res.ok) {
-        const data = await res.json();
+        const data:USERTYPE = await res.json();
+        console.log(data,'data')
         setUser(data);
       } else {
         setUser(null);
@@ -84,10 +83,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     </UserContext.Provider>
   );
 };
-// export const useUserContext = ()=>{
-//     const context = useContext(UserContext)
-//     if(!context){
-//         throw new Error('useLoading must be used within a LoadingProvider')
-//     }
-//     return context
-// }
+// Hook برای استفاده از UserContext
+export const useUserContext = () => {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error('useUserContext must be used within a UserProvider');
+  }
+  return context;
+};

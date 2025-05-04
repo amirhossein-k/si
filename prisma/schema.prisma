@@ -43,6 +43,8 @@ model Post {
   count        Float
   countproduct Float
   priceOffer   Float
+  listProperty ListProperty[]
+  review       ReviewList[]
   productImage ProductImage[]
   published    Boolean        @default(false)
   author       User           @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -50,6 +52,23 @@ model Post {
   categoryList CategoryList[]
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
+}
+
+model ListProperty {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  property    String
+  PropertyOwn Post   @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ownerId     String @db.ObjectId
+}
+
+model ReviewList {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  reviewText String
+  name       String
+  email      String
+  createdAt  DateTime @default(now())
+  reviewOwn  Post     @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ownerId    String   @db.ObjectId
 }
 
 model CategoryList {

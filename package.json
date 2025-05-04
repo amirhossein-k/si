@@ -37,6 +37,7 @@
     "prisma": "^6.3.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hot-toast": "^2.5.2",
     "suneditor-react": "^3.6.1",
     "swiper": "^11.2.5",
     "tailwind-merge": "^3.0.2"

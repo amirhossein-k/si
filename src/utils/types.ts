@@ -35,6 +35,13 @@ export interface USERTYPE {
     updatedAt:Date
     productImage: PHOTO[]
     categoryList: Category[]
+    review: Review[]
+  }
+  export interface Review{
+    reviewText: string
+    name     :  string
+    email    :  string
+    createdAt : Date 
   }
 
   export interface Category{

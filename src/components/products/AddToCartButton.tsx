@@ -1,10 +1,12 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query"
+import React, { useRef, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+
 interface AddToCartResponse {
   success?: boolean;
   error?: string;
-  message?:string
+  message?: string;
 }
 
 interface AddToCartButtonProps {
@@ -14,12 +16,11 @@ interface AddToCartButtonProps {
 const AddToCartButton: React.FC<AddToCartButtonProps> = ({ productId }) => {
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
-  const [responseMessage, setResponseMessage] = useState<string>("");
   const quantityRef = useRef<HTMLInputElement>(null);
+
   const handleAddToCart = async () => {
-     // خواندن مقدار تعداد از input بدون trigger re-render
-     const quantityValue = quantityRef.current?.value;
-     const quantity = quantityValue ? parseInt(quantityValue, 10) : 1;
+    const quantityValue = quantityRef.current?.value;
+    const quantity = quantityValue ? parseInt(quantityValue, 10) : 1;
     setLoading(true);
     try {
       const res = await fetch("/api/cart", {
@@ -29,59 +30,50 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ productId }) => {
         },
         body: JSON.stringify({
           productId,
-          quantity// یا هر مقدار دلخواه
+          quantity,
         }),
       });
       const data: AddToCartResponse = await res.json();
-      if (data.success|| data.message) {
-        setResponseMessage("Product added to cart successfully!");
+      if (data.success || data.message) {
         queryClient.invalidateQueries({ queryKey: ["cart"] });
-
+        toast.success("در لیست خرید اضافه شد", {
+          position: "top-center",
+          duration: 3000,
+        });
       } else {
-        setResponseMessage(data.error || "Error adding to cart");
+        toast.error(data.error || "خطا در افزودن به سبد خرید", {
+          position: "top-center",
+          duration: 3000,
+        });
       }
     } catch (error) {
       console.error(error);
-      setResponseMessage("Error adding to cart");
+      toast.error("خطا در افزودن به سبد خرید", {
+        position: "top-center",
+        duration: 3000,
+      });
     } finally {
       setLoading(false);
     }
   };
 
-
-    // پاکسازی پیام بعد از ۵ ثانیه
-    useEffect(() => {
-      if (responseMessage) {
-        const timer = setTimeout(() => {
-          setResponseMessage("");
-        }, 5000);
-        return () => clearTimeout(timer);
-      }
-    }, [responseMessage]);
-
   return (
-    <div className="flex flex-col items-center gap-2 ">
-    {/* استفاده از input عددی برای دریافت تعداد */}
-    <input
-      type="number"
-      min="1"
-      defaultValue="1"
-      ref={quantityRef}
-      className="p-2 border rounded w-20 text-center text-red-500"
-    />
-    <button
-      onClick={handleAddToCart}
-      disabled={loading}
-      className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-    >
-      {loading ? "در حال افزودن..." : "افزودن به سبد خرید"}
-    </button>
-    {responseMessage && (
-      <div className="p-2 bg-gray-100 text-gray-700 rounded">
-        {responseMessage}
-      </div>
-    )}
-  </div>
+    <div className="flex flex-col items-center gap-2">
+      <input
+        type="number"
+        min="1"
+        defaultValue="1"
+        ref={quantityRef}
+        className="p-2 border rounded w-20 text-center text-red-500"
+      />
+      <button
+        onClick={handleAddToCart}
+        disabled={loading}
+        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+      >
+        {loading ? "در حال افزودن..." : "افزودن به سبد خرید"}
+      </button>
+    </div>
   );
 };
 

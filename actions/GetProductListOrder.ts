@@ -28,7 +28,12 @@ export async function GetProduct({
   const where: Record<string, any> = {};
 
   if (category) {
-    where.category = category;
+    // where.category = category;
+    where.categoryList = {
+      some:{
+        category:category
+      }
+    }
   }
 
   // شرط فیلتر قیمت
