@@ -44,6 +44,7 @@ model Post {
   countproduct Float
   priceOffer   Float
   listProperty ListProperty[]
+  tags         String[]
   review       ReviewList[]
   productImage ProductImage[]
   published    Boolean        @default(false)

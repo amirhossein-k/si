@@ -9,6 +9,7 @@ import NewProduct from "@/components/newproduct/NewProduct";
 import LayoutFirst from "@/components/layout/LayoutFirst";
 import OfferProduct from "@/components/offerProduct/OfferProduct";
 import SpinnersNav from "@/components/products/SpinnerNav";
+import Footer from "./components/footer/Footer";
 
 const categoryLayout: CATEGORYLayout[] = [
   {
@@ -209,6 +210,7 @@ export default async function Home() {
           <div className='hidden' key={item.id}>ddd</div>
         )
       )}
+      <Footer/>
     </div>
   );
 }

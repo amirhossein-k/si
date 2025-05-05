@@ -20,16 +20,18 @@ interface ProductRequest {
   countproduct: number;
   priceOffer: number;
   category:string[]
+  tags:string[]
 }
 
 export async function POST(request: Request) {
   try {
     const requestData: ProductRequest = await request.json();
-    const { name, price, html, checkbox, detailImage,imageDefult, selectedImageId, count,countproduct,priceOffer,category } = requestData;
+    const { name, price, html, checkbox, detailImage,imageDefult, selectedImageId, count,countproduct,priceOffer,category,tags } = requestData;
     // eslint-disable-next-line prefer-const
     let checkedit = checkbox === "انتشار";
     console.log('haaaaaaaaaaa')
-console.log(`${name}  || ${price} || ${html} || ${checkbox} ===${checkedit} || ${detailImage} ||${imageDefult} || ${selectedImageId} || ${count} || ${countproduct} || ${priceOffer} || ${category}`)
+console.log(`${name}  || ${price} || ${html} || ${checkbox} ===${checkedit} || ${detailImage} ||${imageDefult} 
+  || ${selectedImageId} || ${count} || ${countproduct} || ${priceOffer} || ${category} || ${tags}`)
     // اعتبارسنجی فیلدهای اجباری
     if (!name || !price || !html) {
       return NextResponse.json(
@@ -58,7 +60,7 @@ console.log('before')
         count,
         countproduct,
         priceOffer,
-        
+        tags
       },
       include: { author: true },
     });

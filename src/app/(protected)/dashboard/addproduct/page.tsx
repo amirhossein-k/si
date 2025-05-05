@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { handleChangeCheckbox } from '@/utils/handleChangeCheckbox';
 import CustomEditor from '@/components/textEditor/CustomEditor';
 import { Select, SelectItem } from "@heroui/react";
+import Tagss from '@/components/Tags/Tagss';
 
 
 interface ImageObject {
@@ -77,13 +78,12 @@ export default function AddProduct() {
   const [count, setCount] = useState<number>(0);
   const [countproduct, setCountproduct] = useState<number>(0);
   const [priceOffer, setPriceOffer] = useState<number>(0);
-  // const [description, setDescription] = useState('');
   const [error, setError] = useState('');
   const [imageDefult, setImageDefult] = useState('');
-  // const [imageUrl, setImageUrl] = useState('');
   const [detailImage, setDetailImage] = useState<ImageObject[]>([{ key: '', url: "", id: "" }])
   const [checkbox, setCheckbox] = useState('عدم انتشار')
   const router = useRouter();
+  const [tags, setTags] = useState<string[]>([]);
 
   const [hasUnsavedChanges] = useState(true);
   useNavigationGuard(hasUnsavedChanges);
@@ -100,7 +100,8 @@ export default function AddProduct() {
     const categoryArray = Array.from(selectedCategories);
 
     // try {
-    const payload = JSON.stringify({ name, price, html, checkbox, detailImage, imageDefult, selectedImageId, count, countproduct, priceOffer, category: categoryArray  })
+    const payload = JSON.stringify({ name, price, html, checkbox, detailImage, imageDefult,
+       selectedImageId, count, countproduct, priceOffer, category: categoryArray,tags  })
     console.log(payload, 'ersal')
     const res = await fetch('/api/products/add', {
       method: 'POST',
@@ -185,6 +186,9 @@ export default function AddProduct() {
             className="w-full p-2 border rounded"
 
           />
+        </div>
+        <div>
+        <Tagss onTagsChange={setTags}/>
         </div>
 
         <div className={`${styles.checkbox_wrapper_8} `}>

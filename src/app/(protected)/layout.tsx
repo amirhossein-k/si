@@ -13,5 +13,7 @@ export default async function ProtectedLayout({children}:{children:React.ReactNo
     if(!userDetail){
         redirect('/login')
     }
-    return  <UserProvider user={userDetail as USERTYPE}>{children}</UserProvider>
+    return  <UserProvider user={userDetail as USERTYPE}>
+     
+        {children}</UserProvider>
 }

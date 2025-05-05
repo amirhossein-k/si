@@ -9,6 +9,7 @@ export interface USERTYPE {
     listordershop: string[];
     address: ADRESS[];
     admin:   boolean
+
   }
  export interface PHOTO {
     id:string
@@ -36,6 +37,7 @@ export interface USERTYPE {
     productImage: PHOTO[]
     categoryList: Category[]
     review: Review[]
+    tags: string[]
   }
   export interface Review{
     reviewText: string
