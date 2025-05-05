@@ -1,17 +1,16 @@
 // src\app\api\products\review\[id]\route.ts
-import { NextResponse } from 'next/server';
+
+import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { cookies } from 'next/headers';
 import { USERTYPE } from '@/utils/types';
 import { GetUser } from '../../../../../../actions/GetUser';
-import { type NextRequest } from 'next/server';
 
-type RouteHandlerContext<T> = {
-  params: T;
-};
-export async function DELETE(request: NextRequest, context: RouteHandlerContext<{ id: string }>) {
-  try {
-    const reviewId = context.params.id;
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {  try {
+  const { id:reviewId } = await params;
 
     // اعتبارسنجی reviewId
     if (!reviewId) {
