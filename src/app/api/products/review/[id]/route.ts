@@ -1,10 +1,15 @@
-import { NextRequest, NextResponse } from 'next/server';
+// src\app\api\products\review\[id]\route.ts
+import { NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { cookies } from 'next/headers';
 import { USERTYPE } from '@/utils/types';
 import { GetUser } from '../../../../../../actions/GetUser';
+import { type NextRequest } from 'next/server';
 
-export async function DELETE(request: NextRequest, context: { params: { id: string } }) {
+type RouteHandlerContext<T> = {
+  params: T;
+};
+export async function DELETE(request: NextRequest, context: RouteHandlerContext<{ id: string }>) {
   try {
     const reviewId = context.params.id;
 
