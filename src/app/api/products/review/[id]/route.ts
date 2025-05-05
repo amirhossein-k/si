@@ -1,12 +1,12 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { cookies } from 'next/headers';
 import { USERTYPE } from '@/utils/types';
 import { GetUser } from '../../../../../../actions/GetUser';
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, context: { params: { id: string } }) {
   try {
-    const reviewId = params.id;
+    const reviewId = context.params.id;
 
     // اعتبارسنجی reviewId
     if (!reviewId) {
