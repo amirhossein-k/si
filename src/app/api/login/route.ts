@@ -41,6 +41,7 @@ export async function POST(request: Request) {
             authorId: true,
             createdAt: true,
             updatedAt: true,
+            tags:true,
             productImage: {
               select: {
                 id: true,
@@ -134,6 +135,7 @@ export async function POST(request: Request) {
         productImage: post.productImage,
         categoryList: post.categoryList,
         review: post.review,
+        tags:post.tags
       })),
       address: user.address,
     };
