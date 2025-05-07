@@ -82,7 +82,7 @@ export async function GetProduct({
         orderBy,
         skip,
         take: limit,
-        include: { productImage: true,categoryList:true },
+        include: { productImage: true,categoryList:true ,review:true,listProperty:true},
       }),
       prisma.post.count({ where }),
     ]);
