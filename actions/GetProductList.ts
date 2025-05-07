@@ -10,7 +10,7 @@ export async function GetProduct() {
         const listProduct:POSTTYPE[] = await prisma.post.findMany({ orderBy: {
             createdAt: 'desc'
           },include:{
-            productImage:true,categoryList:true
+            productImage:true,categoryList:true,review:true,listProperty:true
           }
       })
         return NextResponse.json(listProduct)

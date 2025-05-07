@@ -9,7 +9,7 @@ import { NextResponse } from 'next/server'
 export async function GetUser(id: string) {
     try {
         const user: USERTYPE | null = await prisma.user.findUnique({
-            where: { id }, include: { posts: { include: { productImage: true,categoryList:true } }, address: true }
+            where: { id }, include: { posts: { include: { productImage: true,categoryList:true,review:true,listProperty:true } }, address: true }
         })
 
 
