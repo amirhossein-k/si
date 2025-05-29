@@ -38,6 +38,7 @@ export interface USERTYPE {
     categoryList: Category[]
     review: Review[]
     tags: string[]
+    // tableContent?: string; // اختیاری کردن tableContent
     tableContent:string | null
   }
   export interface Review{

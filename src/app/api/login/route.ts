@@ -1,3 +1,4 @@
+// src\app\api\login\route.ts
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import bcrypt from 'bcrypt';
@@ -28,6 +29,7 @@ export async function POST(request: Request) {
         isVerfied: true,
         listordershop: true,
         password: true,
+
         posts: {
           select: {
             id: true,
@@ -42,6 +44,7 @@ export async function POST(request: Request) {
             createdAt: true,
             updatedAt: true,
             tags:true,
+            tableContent: true, // اضافه کردن tableContent
             productImage: {
               select: {
                 id: true,
@@ -135,7 +138,9 @@ export async function POST(request: Request) {
         productImage: post.productImage,
         categoryList: post.categoryList,
         review: post.review,
-        tags:post.tags
+        tags:post.tags,
+        // tableContent را فقط در صورتی اضافه کنید که وجود داشته باشد
+    ...(post.tableContent && { tableContent: post.tableContent }),
       })),
       address: user.address,
     };
