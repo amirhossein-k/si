@@ -40,6 +40,7 @@ model Post {
   title        String
   price        Float
   content      String?
+  tableContent String?
   count        Float
   countproduct Float
   priceOffer   Float

@@ -1,3 +1,4 @@
+// src\app\(protected)\dashboard\addproduct\page.tsx
 'use client';
 import styles from '@/features/styles/checkBox/Checkbox.module.css'
 import React, { useEffect, useState } from 'react';
@@ -84,10 +85,49 @@ export default function AddProduct() {
   const [checkbox, setCheckbox] = useState('عدم انتشار')
   const router = useRouter();
   const [tags, setTags] = useState<string[]>([]);
-
+  const [rows, setRows] = useState<number>(0);
+  const [columns, setColumns] = useState<number>(0);
+  const [tableData, setTableData] = useState<string[][]>([]);
   const [hasUnsavedChanges] = useState(true);
   useNavigationGuard(hasUnsavedChanges);
 
+
+  // به‌روزرسانی tableData بر اساس تعداد ردیف‌ها و ستون‌ها
+  useEffect(() => {
+    if (rows > 0 && columns > 0) {
+      const newTableData = Array.from({ length: rows }, () => Array(columns).fill(''));
+      setTableData(newTableData);
+    } else {
+      setTableData([]);
+    }
+  }, [rows, columns]);
+
+  // تبدیل tableData به HTML
+  const generateTableHTML = () => {
+    // بررسی خالی بودن یا تعریف‌نشده بودن tableData
+    if (!tableData || tableData.length === 0 || tableData.every(row => row.every(cell => cell === ''))) {
+      return ''; // رشته خالی در صورت نبود داده
+    }
+  
+    // تولید HTML جدول
+   // استفاده از کلاس‌های Tailwind برای جدول
+  let tableHTMLe = `
+    <table class="table-auto w-full border-collapse border border-gray-300 text-sm">
+      <tbody>
+  `;
+  tableData.forEach(row => {
+    tableHTMLe += '<tr class="odd:bg-gray-50">';
+    row.forEach(cell => {
+      tableHTMLe += `<td class="border border-gray-300 px-4 py-2 text-gray-800">${cell}</td>`;
+    });
+    tableHTMLe += '</tr>';
+  });
+  tableHTMLe += `
+      </tbody>
+    </table>
+  `;
+    return tableHTMLe;
+  };
 
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -98,9 +138,25 @@ export default function AddProduct() {
       return;
     }
     const categoryArray = Array.from(selectedCategories);
+    const tableHTML = generateTableHTML();
 
+    // 1. ساخت HTML جدول از داده‌ها
+
+  // 2. اگر جدول وجود دارد، فقط همین قسمت را نگه دار
+ 
+  const fullContenttt = tableHTML
+    ? `${html}<br>${tableHTML}`
+    : html;
+
+
+    console.log(fullContenttt, 'tableContent');
     // try {
-    const payload = JSON.stringify({ name, price, html, checkbox, detailImage, imageDefult,
+    console.log(">>> Payload to send:", {
+  tableContent: fullContenttt,
+  
+});
+    const payload = JSON.stringify({ name, price, html, checkbox,
+      tableContent: fullContenttt,      detailImage, imageDefult,
        selectedImageId, count, countproduct, priceOffer, category: categoryArray,tags  })
     console.log(payload, 'ersal')
     const res = await fetch('/api/products/add', {
@@ -241,14 +297,52 @@ export default function AddProduct() {
               dangerouslySetInnerHTML={{ __html: html }}
             />
           </div>
-          {/* <label className="block mb-2">توضیحات:</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-full p-2 border rounded"
-            
-          ></textarea> */}
+          
         </div>
+ {/* فیلدهای ورودی برای تعداد ردیف و ستون */}
+ <div>
+          <label className="block mb-2">تعداد ردیف‌ها:</label>
+          <input
+            type="number"
+            value={rows}
+            onChange={(e) => setRows(Number(e.target.value))}
+            className="w-full p-2 border rounded"
+          />
+        </div>
+        <div>
+          <label className="block mb-2">تعداد ستون‌ها:</label>
+          <input
+            type="number"
+            value={columns}
+            onChange={(e) => setColumns(Number(e.target.value))}
+            className="w-full p-2 border rounded"
+          />
+        </div>
+
+        {/* فیلدهای ورودی برای سلول‌های جدول */}
+        {rows > 0 && columns > 0 && (
+          <div>
+            <h2 className="text-xl font-bold mb-4">ورود داده‌های جدول</h2>
+            {tableData.map((row, rowIndex) => (
+              <div key={rowIndex} className="flex space-x-2 mb-2">
+                {row.map((cell, colIndex) => (
+                  <input
+                    key={`${rowIndex}-${colIndex}`}
+                    type="text"
+                    value={cell}
+                    onChange={(e) => {
+                      const newTableData = [...tableData];
+                      newTableData[rowIndex][colIndex] = e.target.value;
+                      setTableData(newTableData);
+                    }}
+                    className="w-full p-2 border rounded"
+                    placeholder={`ردیف ${rowIndex + 1}, ستون ${colIndex + 1}`}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
 
         {error && <p className="text-red-500 text-sm">{error}</p>}
 

@@ -1,3 +1,4 @@
+// src\app\api\products\add\route.ts
 import { getSession } from "@/lib/auth";
 import prisma from '@/lib/db';
 import { NextResponse } from 'next/server';
@@ -13,6 +14,7 @@ interface ProductRequest {
   price: number;
   html: string;
   checkbox: string;
+  tableContent: string
   detailImage: ImageObject[]; // آرایه‌ای از اشیای تصویر
   imageDefult: string;
   selectedImageId: string;
@@ -21,17 +23,20 @@ interface ProductRequest {
   priceOffer: number;
   category:string[]
   tags:string[]
+  
 }
 
 export async function POST(request: Request) {
   try {
     const requestData: ProductRequest = await request.json();
-    const { name, price, html, checkbox, detailImage,imageDefult, selectedImageId, count,countproduct,priceOffer,category,tags } = requestData;
+    const { name, price, html, checkbox,tableContent, detailImage,imageDefult, selectedImageId, count,countproduct,priceOffer,category,tags } = requestData;
     // eslint-disable-next-line prefer-const
     let checkedit = checkbox === "انتشار";
     console.log('haaaaaaaaaaa')
 console.log(`${name}  || ${price} || ${html} || ${checkbox} ===${checkedit} || ${detailImage} ||${imageDefult} 
-  || ${selectedImageId} || ${count} || ${countproduct} || ${priceOffer} || ${category} || ${tags}`)
+  || ${selectedImageId} || ${count} || ${countproduct} || ${priceOffer} || ${category} || ${tags} || ${tableContent}`)
+    console.log("🛠️ [API] Full requestData:", requestData);
+    console.log("🛠️ [API] tableContent:", JSON.stringify(requestData.tableContent));
     // اعتبارسنجی فیلدهای اجباری
     if (!name || !price || !html) {
       return NextResponse.json(
@@ -39,6 +44,14 @@ console.log(`${name}  || ${price} || ${html} || ${checkbox} ===${checkedit} || $
         { status: 400 }
       );
     }
+// ---- اینجا بخش حذف قبل از <table> ----
+    let cleanTableContent = "";
+    const idx = tableContent.indexOf("<table");
+    if (idx !== -1) {
+      cleanTableContent = tableContent.slice(idx);
+    }
+    console.log("» جدول تمیز:", cleanTableContent);
+
 
     const session = await getSession();
     console.log(session, 'sesiion data');
@@ -50,17 +63,23 @@ console.log(`${name}  || ${price} || ${html} || ${checkbox} ===${checkedit} || $
       );
     }
 console.log('before')
+console.log(">>> Received tableContent on server:", tableContent);
+
+
     const newProduct = await prisma.post.create({
       data: {
         title: name,
         content: html,
+        tableContent: cleanTableContent ,// اگر tableContent null یا undefined باشد، خالی ذخیره شود
         published: checkedit,
         price:Number(price),
         authorId: session?.id,
         count,
         countproduct,
         priceOffer,
-        tags
+        tags,
+       
+
       },
       include: { author: true },
     });

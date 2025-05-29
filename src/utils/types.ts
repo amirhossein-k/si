@@ -38,6 +38,7 @@ export interface USERTYPE {
     categoryList: Category[]
     review: Review[]
     tags: string[]
+    tableContent:string | null
   }
   export interface Review{
     reviewText: string

@@ -1,3 +1,4 @@
+// src\app\(public)\products\[id]\page.tsx
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { GetProduct } from "../../../../../actions/GetProductList";
@@ -45,6 +46,7 @@ export default async function ProductPage({
         },
       ];
 
+      console.log(product,'product')
   return (
     <div className="p-6 " dir="rtl">
       <div className="nav">
@@ -124,7 +126,7 @@ export default async function ProductPage({
         </div>
       </div>
       <div className="botom bg-green-">
-        <Tabs description={product.content ?? ""} id={product.id} />
+        <Tabs description={product.content ?? ""} id={product.id} tableContent={product.tableContent ??""}/>
       </div>
     </div>
   );

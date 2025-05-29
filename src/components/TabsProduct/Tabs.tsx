@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Tables from "./Tables/Tables";
 import Reviews from "./Reviews/Reviews";
 
-const Tabs = ({description,id}: {description:string | null,id:string}) => {
+const Tabs = ({description,id,tableContent}: {description:string | null,id:string,tableContent:string }) => {
   const [activeTab, setActiveTab] = useState("توضیحات");
 
   return (
@@ -46,7 +46,7 @@ const Tabs = ({description,id}: {description:string | null,id:string}) => {
         )}
         {activeTab === "اطلاعات تکمیلی" && (
           <div className="p-4 border border-gray-300">
-          <Tables/>
+          <Tables tableContent={tableContent ?? ""}/>
           </div>
         )}
         {activeTab === "نظرات" && (
