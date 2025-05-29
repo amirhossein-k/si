@@ -19,6 +19,13 @@ const nextConfig: NextConfig = {
       {
         protocol: 'http',
         hostname: 'c961427.parspack.net',
+      },{
+        protocol: 'https',
+        hostname: 'c713657.parspack.net',
+      },
+      {
+        protocol: 'http',
+        hostname: 'c713657.parspack.net',
       },
       {
         protocol: "https",
