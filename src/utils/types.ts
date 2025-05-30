@@ -20,6 +20,14 @@ export interface USERTYPE {
     
   
   }
+
+// رابط جدید برای خروجی با تاریخ‌های فرمت‌شده
+export interface FormattedPostType extends Omit<POSTTYPE, 'createdAt' | 'updatedAt'> {
+  createdAt: string;
+  updatedAt: string;
+}
+
+
    export interface POSTTYPE {
     quantity? : string
     id     :  string

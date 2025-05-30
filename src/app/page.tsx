@@ -1,8 +1,9 @@
+// src\app\page.tsx
 "use server";
 
 import FitstItem from "@/components/fitst/FitstItem";
 import Layout from "@/components/layout/Layout";
-import { CATEGORYLayout } from "@/utils/types";
+import { CATEGORYLayout ,FormattedPostType} from "@/utils/types";
 import SliderComponent from "@/components/slider/slider";
 import GIfHome from "@/components/GIfHome/GIfHome";
 import NewProduct from "@/components/newproduct/NewProduct";
@@ -10,6 +11,7 @@ import LayoutFirst from "@/components/layout/LayoutFirst";
 import OfferProduct from "@/components/offerProduct/OfferProduct";
 import SpinnersNav from "@/components/products/SpinnerNav";
 import Footer from "./components/footer/Footer";
+import { GetNewProducts, GetProductOffer } from "../../actions/GetProductList";
 
 const categoryLayout: CATEGORYLayout[] = [
   {
@@ -68,24 +70,7 @@ const categoryLayout: CATEGORYLayout[] = [
       },
     ]
   },
-  {
-    layout: "newproduct",
-    id: "QdcHTH4d4R2J9",
-    item: [
-      {
-        id: 'dcdcdw1',
-        link: '/qhab',
-        pic: 'https://c961427.parspack.net/c961427/uploads/1741707921428-photo_2_2025-01-25_21-12-24.jpg',
-        title: 'قاب ها'
-      },
-      {
-        id: '2dcdc',
-        link: '/kif',
-        pic: 'https://c961427.parspack.net/c961427/uploads/1741707921428-photo_2_2025-01-25_21-12-24.jpg',
-        title: 'کیف ها'
-      },
-    ]
-  },
+  
   {
     layout: "gifhome",
     id: "QHTH4d4R2J9",
@@ -104,77 +89,36 @@ const categoryLayout: CATEGORYLayout[] = [
       },
     ]
   },
-  {
-    layout: "offerproduct",
-    id: "QdcHTH4d4feR2J9",
-    item: [
-      {
-        id: 'dcdfefcdw1',
-        link: '/qhab',
-        pic: 'https://c961427.parspack.net/c961427/uploads/fpb-1.jpg',
-        title: '5قاب ها',
-        count: '21/03/2025/23',
-      },
-      {
-        id: '2dcdfefc',
-        link: '/kif',
-        pic: 'https://c961427.parspack.net/c961427/uploads/fpb-2.jpg',
-        title: '6 ها',
-        count: '21/03/2025/22',
-
-      },
-      {
-        id: 'dcdfefcdw1',
-        link: '/qhab',
-        pic: 'https://c961427.parspack.net/c961427/uploads/fpb-1.jpg',
-        title: '5قاب ها',
-        count: '22/03/2025/22',
-
-      },
-      {
-        id: '2dcdfefc',
-        link: '/kif',
-        pic: 'https://c961427.parspack.net/c961427/uploads/fpb-2.jpg',
-        title: '4 ها',
-        count: '23/03/2025/22'
-      },
-      {
-        id: 'dcdfefcdw1',
-        link: '/qhab',
-        pic: 'https://c961427.parspack.net/c961427/uploads/fpb-1.jpg',
-        title: '3قاب ها',
-        count: '24/03/2025/22',
-
-      },
-      {
-        id: '2dcdfefc',
-        link: '/kif',
-        pic: 'https://c961427.parspack.net/c961427/uploads/fpb-2.jpg',
-        title: 'کfیف ها',
-        count: '22/03/2025/08',
-
-      },
-      {
-        id: 'dcdfefcdw1',
-        link: '/qhab',
-        pic: 'https://c961427.parspack.net/c961427/uploads/fpb-1.jpg',
-        title: '2قاب ها',
-        count: '22/03/2025/10',
-
-      },
-      {
-        id: '2dcdfefc',
-        link: '/kif',
-        pic: 'https://c961427.parspack.net/c961427/uploads/fpb-2.jpg',
-        title: 'fffff',
-        count: '25/03/2025/22',
-
-      },
-    ]
-  },
+  
+  
 ];
 
 export default async function Home() {
+
+// گرفتن محصولات تخفیف‌دار
+  const offerList = await GetProductOffer();
+  if ('error' in offerList) {
+    return (
+      <div className="text-red-500 text-center p-4">
+        خطا در بارگذاری محصولات تخفیف‌دار: {offerList.error}
+      </div>
+    );
+  }
+  // محصولات جدید
+  const newList = await GetNewProducts()
+  if('error' in newList){
+    return(
+      <div className="text-red-500 text-center p-4">
+        خطا در بارگذاری محصولات جدید : {newList.error}
+
+      </div>
+    )
+  }
+
+  const productsOffer : FormattedPostType[] = offerList
+  const newProducts : FormattedPostType[] = newList
+
+
   return (
     <div className="">
              <SpinnersNav/>
@@ -194,22 +138,23 @@ export default async function Home() {
       </LayoutFirst>
 
       {categoryLayout.map((item: CATEGORYLayout) =>
-        item.layout === "newproduct" ? (
-          <Layout size={"offer"} key={item.id}>
-            <NewProduct category={item.item || []} />
-          </Layout>
-        ) : item.layout === "gifhome" ? (
+        item.layout === "gifhome" ? (
           <Layout size={"newproduct"} key={item.id}>
             <GIfHome category={item.item || []} />
           </Layout>
-        ) : item.layout === "offerproduct" ? (
-          <Layout size={"offer"} key={item.id}>
-            <OfferProduct category={item.item || []} />
-          </Layout>
-        ) : (
+        )  : (
           <div className='hidden' key={item.id}>ddd</div>
         )
       )}
+      <Layout size={'offer'} >
+        <OfferProduct category={productsOffer || []}/>
+      </Layout>
+      <Layout size={'offer'} >
+        <NewProduct category={newProducts || []}/>
+      </Layout>
+        
+      
+    
       <Footer/>
     </div>
   );

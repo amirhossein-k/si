@@ -4,12 +4,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard, Scrollbar, Navigation, Pagination } from "swiper/modules";
 import Image from "next/image";
 import Link from "next/link";
-import { CATEGORYLayoutITEM } from "@/utils/types";
+// import { CATEGORYLayoutITEM } from "@/utils/types";
 import { calculateTimeDifference2 } from "../../../hooks/percent";
-const OfferProduct = ({ category }: { category: CATEGORYLayoutITEM[] }) => {
-  console.log(calculateTimeDifference2("21/03/2025/23"), 'h1')
-  console.log(calculateTimeDifference2("21/03/2025/22"), '6ها')
-  // console.log(calculateTimeDifference2("22/03/2025/23"), 'd')
+import { FormattedPostType } from "@/utils/types";
+// import { calculatePercentage } from "@/utils/OfferMade";
+import { calculatePercentage } from "@/utils/OfferMade";
+
+const OfferProduct = ({ category }: { category: FormattedPostType[] }) => {
+  
+  console.log(category,'category offer')
+  console.log(calculateTimeDifference2("5/29/2025/23"), 'd')
   return (
     <div
       className="flex flex-col sm:w-[95%] md:w-[95%] lg:w-[96%] m-auto h-[480px]  p-1 py-2 shadow-shadow-one "
@@ -98,7 +102,7 @@ const OfferProduct = ({ category }: { category: CATEGORYLayoutITEM[] }) => {
                 </div>
                 <div className="w-full h-[75%] bg-fuchsia-300 relative">
                   <div className="absolute z-30 bg-black  text-white rounded px-2 py-1 right-2 top-3 group-hover:text-purple-300">
-                    -5%
+                   {itt.priceOffer}%
                   </div>
                   <Image
                     alt=""
@@ -107,8 +111,10 @@ const OfferProduct = ({ category }: { category: CATEGORYLayoutITEM[] }) => {
                     //     (item) => item.defaultImage === true
                     //   )[0].childImage
                     // }
-                    src={itt.pic}
-                    fill
+ src={
+                      itt?.productImage?.filter((item) => item.defaultImage === true)[0]?.childImage ||
+                      'https://c713657.parspack.net/c713657/uploads/1748537697698-WhatsApp%20Image%202025-01-25%20at%2021.28.45_cdccb435.jpg'
+                    }                    fill
                     style={{ objectFit: "fill" }}
                     quality={100}
                   // width={1500}
@@ -117,41 +123,57 @@ const OfferProduct = ({ category }: { category: CATEGORYLayoutITEM[] }) => {
                 </div>
                 <div className="w-full h-[25%] flex  flex-col  p-2 mb-5">
                   <div className="title flex-1 text-lg">{itt.title}</div>
-                  <div className="price flex-1 text-lg" dir="ltr">
-                    155 تومان
-                  </div>
+                  <div className="buy_text">
+            <p className="mt-2 text-lg font-semibold">
+              {itt.priceOffer !== 0 ? (
+                <>
+                  <span className="relative mx-2 w-fit">
+                    {itt.price?.toLocaleString() ?? "."}
+                    <span className="diagonal-line w-[80%] h-[2px] absolute bg-red-600 rotate-[0deg] right-[7px] top-[13px] inline-block"></span>
+                  </span>
+                  {calculatePercentage(
+                    itt.priceOffer,
+                    itt.price.toString()
+                  ).toLocaleString()}
+                </>
+              ) : (
+                <>{itt.price?.toLocaleString() ?? "."}</>
+              )}{" "}
+              تومان
+            </p>
+          </div>
                 </div>
                 <div className="absolute -bottom-3 right-0">  <div className="w-full h-[50px]  "> مدت زمان مانده از تخفیف</div></div>
                 <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 relative">
-                  {itt?.count && calculateTimeDifference2(itt?.count || "20")?.h === '100%' ? (
+                  {String(itt?.createdAt) && calculateTimeDifference2(String(itt?.createdAt) || "20")?.h === '100%' ? (
                     <>
 
-                      {calculateTimeDifference2(itt?.count || "20")?.he === true ? (
+                      {calculateTimeDifference2(String(itt?.createdAt) || "20")?.he === true ? (
                         <div className="absolute bottom-3 left-10 text-sky-500 text-center ">
-                          {calculateTimeDifference2(itt?.count || "20").ht}
+                          {calculateTimeDifference2(String(itt?.createdAt) || "20").ht}
                         </div>
                       ) : (<div className="hidden"></div>)}
-                      <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: calculateTimeDifference2(itt?.count || "20").d }}></div>
+                      <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: calculateTimeDifference2(String(itt?.createdAt) || "20").d }}></div>
                     </>
                   ) : (
                     <>
 
-                      {calculateTimeDifference2(itt?.count || "20")?.het === true ? (
+                      {calculateTimeDifference2(String(itt?.createdAt) || "20")?.het === true ? (
                         <div className="absolute bottom-3 left-0 text-sm text-sky-500 text-center ">
                          کمتر از یک ساعت
                         </div>
                       ) :
                        
-                        calculateTimeDifference2(itt?.count || "20")?.hetr === true ? (
+                        calculateTimeDifference2(String(itt?.createdAt) || "20")?.hetr === true ? (
                           <div className="absolute bottom-3 left-7 text-sky-500 text-center ">
-                          {calculateTimeDifference2(itt?.count || "20").dt}
+                          {calculateTimeDifference2(String(itt?.createdAt) || "20").dt}
                         </div>
                         ):(
                         <div className="absolute bottom-3 left-3 text-sky-500 text-center ">
-                          {calculateTimeDifference2(itt?.count || "20").dt}
+                          {calculateTimeDifference2(String(itt?.createdAt) || "20").dt}
                         </div>
                        )}
-                      <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: calculateTimeDifference2(itt?.count || "20").h }}></div>
+                      <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: calculateTimeDifference2(String(itt?.createdAt) || "20").h }}></div>
                     </>
                   )}
 
