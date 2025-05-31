@@ -35,6 +35,7 @@ export async function GET(request: Request) {
         reviewText: true,
         name: true,
         email: true,
+        rating:true,
         createdAt: true,
       },
       orderBy: { createdAt: 'desc' }, // مرتب‌سازی بر اساس تاریخ (جدیدترین ابتدا)

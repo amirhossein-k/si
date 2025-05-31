@@ -8,10 +8,10 @@ import { GetUser } from '../../../../../../actions/GetUser';
 export async function POST(request: Request) {
   try {
     // دریافت بدنه درخواست
-    const { productId, name, email, reviewText } = await request.json();
+    const { productId, name, email, reviewText,rating } = await request.json();
 
     // اعتبارسنجی ورودی‌ها
-    if (!productId || !name || !email || !reviewText) {
+    if (!productId || !name || !email || !reviewText || rating ===undefined) {
       return NextResponse.json(
         { error: 'تمامی فیلدها (productId, name, email, reviewText) الزامی هستند' },
         { status: 400 }
@@ -68,6 +68,8 @@ export async function POST(request: Request) {
         name: user.name || name, // استفاده از نام کاربر اگر موجود باشد
         email: user.email || email, // استفاده از ایمیل کاربر اگر موجود باشد
         ownerId: productId,
+        rating
+        
       },
       select: {
         id: true,
@@ -75,6 +77,7 @@ export async function POST(request: Request) {
         name: true,
         email: true,
         createdAt: true,
+        rating:true
       },
     });
 

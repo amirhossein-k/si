@@ -8,6 +8,7 @@ import AddToCartButton from "@/components/products/AddToCartButton";
 import Tabs from "@/components/TabsProduct/Tabs";
 import CurrentPath from "@/components/path/CurrentPath";
 import { calculatePercentage } from "@/utils/OfferMade";
+import { Rating, ThinStar } from "@smastrom/react-rating";
 
 // دریافت محصول بر اساس `slug`
 async function getProduct(id: string): Promise<FormattedPostType | null> {
@@ -61,10 +62,23 @@ export default async function ProductPage({
           <h1 className="text-2xl font-bold">{product.title}</h1>
 
           <div className="score flex flex-row gap-4">
-            <div className="icone">
-              <i className="bi bi-star-fill text-yellow-500"></i>
-              <i className="bi bi-star text-yellow-500"></i>
-            </div>
+           {product.review && product.review.length > 0 && (
+    <span className="mr-2">
+      <Rating
+        style={{ maxWidth: 100 }}
+        value={
+          product.review.reduce((sum, review) => sum + review.rating, 0) / product.review.length
+        }
+        readOnly
+        itemStyles={{
+          itemStrokeWidth: 2,
+          activeFillColor: "#f1a545",
+          activeStrokeColor: "#d3d3d3",
+          itemShapes:ThinStar
+        }}
+      />
+    </span>
+  )}
             <div className="count">{product.review.length} نظر</div>
           </div>
           <div className="buy_text">

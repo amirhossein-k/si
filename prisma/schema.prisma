@@ -68,6 +68,7 @@ model ReviewList {
   reviewText String
   name       String
   email      String
+  rating    Float
   createdAt  DateTime @default(now())
   reviewOwn  Post     @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   ownerId    String   @db.ObjectId

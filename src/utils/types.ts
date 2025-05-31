@@ -54,6 +54,7 @@ export interface FormattedPostType extends Omit<POSTTYPE, 'createdAt' | 'updated
     name     :  string
     email    :  string
     createdAt : Date 
+    rating   :number
   }
 
   export interface Category{

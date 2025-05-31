@@ -8,7 +8,8 @@ import Link from 'next/link';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { revalidateProductPage } from '../../../../actions/productRefresh';
-
+import { Rating, ThinStar } from "@smastrom/react-rating";
+import "@smastrom/react-rating/style.css";
 interface PropsReview {
   id: string;
 }
@@ -19,6 +20,7 @@ interface Review {
   name: string;
   email: string;
   createdAt: string;
+  rating:number
 }
 
 // تابع دریافت لیست نظرات
@@ -38,6 +40,8 @@ const addReview = async (reviewData: {
   name: string;
   email: string;
   reviewText: string;
+    rating:number
+
 }): Promise<Review> => {
   const res = await fetch('/api/products/review/add', {
     method: 'POST',
@@ -68,6 +72,7 @@ const Reviews = ({ id }: PropsReview) => {
   const { user, loading } = useUserContext();
   const queryClient = useQueryClient();
   const [text, setText] = useState<string>('');
+  const [rating, setRating] = useState<number>(0); // حالت برای امتیاز
   const [error, setError] = useState<string | null>(null);
 
   // دریافت لیست نظرات
@@ -96,6 +101,7 @@ const Reviews = ({ id }: PropsReview) => {
     onSuccess: async() => {
       toast.success('نظر شما با موفقیت ثبت شد');
       setText('');
+      setRating(0)
       queryClient.invalidateQueries({ queryKey: ['reviews', id] });
       // فراخوانی Server Action برای به‌روزرسانی کش محصول
       const result = await revalidateProductPage(id);
@@ -157,6 +163,7 @@ const Reviews = ({ id }: PropsReview) => {
       name: user.name || '',
       email: user.email || '',
       reviewText: text,
+      rating,
     });
   };
 
@@ -217,6 +224,19 @@ const Reviews = ({ id }: PropsReview) => {
                 <i className="fa fa-clock-o"></i>
                 {new Date(review.createdAt).toLocaleString('fa-IR')}
               </span>
+              <div className="mb-2">
+               <Rating
+                  style={{ maxWidth: 100 }}
+                  value={review.rating}
+                  readOnly
+                  itemStyles={{
+                    itemStrokeWidth: 2,
+                    activeFillColor: "#f1a545",
+                    activeStrokeColor: "#d3d3d3", // اصلاح شده
+                    itemShapes:ThinStar
+                  }}
+                />
+              </div>
               <p className="be-comment-text text-xs flex md:w-[70%] lg:w-[80%] justify-center text-[#7a8192] bg-[#f6f6f7] border border-[#edeff2] pt-[15px] pr-[20px] pb-[20px] pl-[20px]">
                 {review.reviewText}
               </p>
@@ -261,6 +281,22 @@ const Reviews = ({ id }: PropsReview) => {
                 placeholder="ایمیل خود را وارد کنید"
                 className="w-full p-2 border rounded"
                 disabled
+              />
+            </div>
+          </div>
+          <div className="col-xs-12 my-2">
+            <div className="form-group">
+              <label className="block mb-2">امتیاز شما:</label>
+             <Rating
+                style={{ maxWidth: 150 }}
+                value={rating}
+                onChange={setRating}
+                itemStyles={{
+                  itemShapes: ThinStar, // اضافه کردن شکل ستاره
+                  itemStrokeWidth: 2,
+                  activeFillColor: "#f1a545",
+                  activeStrokeColor: "#d3d3d3",
+                }}
               />
             </div>
           </div>
