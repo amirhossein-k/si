@@ -3,14 +3,14 @@
 import { useLoading } from '@/context/LoadingContext';
 import { renderCountStatus } from '@/utils/CountStatus';
 import { calculatePercentage } from '@/utils/OfferMade';
-import { PHOTO, POSTTYPE } from '@/utils/types';
+import { PHOTO, FormattedPostType } from '@/utils/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useTransition } from 'react';
 
 
-export default function ProductCard({ product }: { product:POSTTYPE }) {
+export default function ProductCard({ product }: { product:FormattedPostType }) {
   console.log(product, 'prodict')
 
   const [isPending,startTransition] = useTransition()  

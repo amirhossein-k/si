@@ -3,19 +3,19 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { GetProduct } from "../../../../../actions/GetProductList";
 import ImagesProduct from "@/components/imageShow/ImagesProductID";
-import { PHOTO, POSTTYPE } from "@/utils/types";
+import { PHOTO, FormattedPostType } from "@/utils/types";
 import AddToCartButton from "@/components/products/AddToCartButton";
 import Tabs from "@/components/TabsProduct/Tabs";
 import CurrentPath from "@/components/path/CurrentPath";
 import { calculatePercentage } from "@/utils/OfferMade";
 
 // دریافت محصول بر اساس `slug`
-async function getProduct(id: string): Promise<POSTTYPE | null> {
+async function getProduct(id: string): Promise<FormattedPostType | null> {
   try {
     const response = await GetProduct();
     if (!response.ok) throw new Error("خطا در دریافت اطلاعات محصول");
 
-    const products: POSTTYPE[] = await response.json();
+    const products: FormattedPostType[] = await response.json();
     return products.find((p) => p.id === id) ?? null;
   } catch (error) {
     console.error("Error fetching product:", error);
@@ -65,8 +65,7 @@ export default async function ProductPage({
               <i className="bi bi-star-fill text-yellow-500"></i>
               <i className="bi bi-star text-yellow-500"></i>
             </div>
-            <div className="count">0نظر</div>
-            <button>افزودن امتیاز</button>
+            <div className="count">{product.review.length} نظر</div>
           </div>
           <div className="buy_text">
             <p className="mt-2 text-lg font-semibold">

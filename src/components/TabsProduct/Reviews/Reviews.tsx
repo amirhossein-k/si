@@ -7,6 +7,7 @@ import { useUserContext } from '@/context/UserContext2';
 import Link from 'next/link';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
+import { revalidateProductPage } from '../../../../actions/productRefresh';
 
 interface PropsReview {
   id: string;
@@ -92,12 +93,16 @@ const Reviews = ({ id }: PropsReview) => {
       ]);
       return { previousReviews };
     },
-    onSuccess: () => {
+    onSuccess: async() => {
       toast.success('نظر شما با موفقیت ثبت شد');
       setText('');
       queryClient.invalidateQueries({ queryKey: ['reviews', id] });
-    },
-    onError: (err, _, context) => {
+      // فراخوانی Server Action برای به‌روزرسانی کش محصول
+      const result = await revalidateProductPage(id);
+      if (result && !result.success) {
+        toast.error(result.error || 'خطا در به‌روزرسانی صفحه');
+      }
+    },    onError: (err, _, context) => {
       setError(err.message || 'خطا در ارسال نظر');
       queryClient.setQueryData(['reviews', id], context?.previousReviews);
       toast.error('خطا در ارسال نظر');
@@ -118,8 +123,12 @@ const Reviews = ({ id }: PropsReview) => {
       );
       return { previousReviews };
     },
-    onSuccess: () => {
+    onSuccess: async() => {
       toast.success('نظر با موفقیت حذف شد');
+      const result = await revalidateProductPage(id);
+      if (result && !result.success) {
+        toast.error(result.error || 'خطا در به‌روزرسانی صفحه');
+      }
     },
     onError: (err, _, context) => {
       setError(err.message || 'خطا در حذف نظر');

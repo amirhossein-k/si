@@ -33,13 +33,13 @@ import ProductList from '@/components/products/ProductList'
 
 // import { getProducts } from '@/lib/api/products';
 import { GetProduct } from '../../../../actions/GetProductList'
-import { POSTTYPE } from '@/utils/types'
+import { FormattedPostType } from '@/utils/types'
 
 export default async function ProductsPage() {
   // const products:Post[] = await getProducts();
   const data: Response = await GetProduct();
 
-  const products: POSTTYPE[] = await data.json();
+  const products: FormattedPostType[] = await data.json();
 
 
   return (

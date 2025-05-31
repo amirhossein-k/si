@@ -80,6 +80,8 @@ export default function AddProduct() {
   const [countproduct, setCountproduct] = useState<number>(0);
   const [priceOffer, setPriceOffer] = useState<number>(0);
   const [error, setError] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [dateOffer, setDateOffer] = useState<any>();
   const [imageDefult, setImageDefult] = useState('');
   const [detailImage, setDetailImage] = useState<ImageObject[]>([{ key: '', url: "", id: "" }])
   const [checkbox, setCheckbox] = useState('عدم انتشار')
@@ -239,6 +241,17 @@ export default function AddProduct() {
             type="number"
             value={priceOffer}
             onChange={(e) => setPriceOffer(Number(e.target.value))}
+            className="w-full p-2 border rounded"
+
+          />
+        </div>
+         <div>
+          <label className="block mb-2">مدت زمان تخفیف :</label>
+          <span className='text-sm '>تاریخ به میلادی وارد شود روز/ماه/سال/ساعت</span>
+          <input
+            type="text"
+            value={dateOffer}
+            onChange={(e) => setDateOffer(e.target.value)}
             className="w-full p-2 border rounded"
 
           />

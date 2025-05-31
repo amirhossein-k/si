@@ -22,7 +22,14 @@ export async function GetProduct() {
             productImage:true,categoryList:true,review:true,listProperty:true,
           }
       })
-        return NextResponse.json(listProduct)
+        // تبدیل تاریخ createdAt و updatedAt به فرمت میلادی
+    const formattedListProduct: FormattedPostType[] = listProduct.map((product) => ({
+      ...product,
+      createdAt: formatToGregorianDate(product.createdAt),
+      updatedAt: formatToGregorianDate(product.updatedAt),
+    }));
+
+        return NextResponse.json(formattedListProduct)
 
     } catch (error) {
         console.log(error, 'error get listproduct error')

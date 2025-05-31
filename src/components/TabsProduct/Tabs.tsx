@@ -34,7 +34,7 @@ const Tabs = ({description,id,tableContent}: {description:string | null,id:strin
         {activeTab === "توضیحات" && (
           <div className="p-4 border border-gray-300">
            <div className="mt-4 p-4 border bg-gray-100">
-          <h2 className="font-semibold mb-2">پیش‌نمایش:</h2>
+          <h2 className="font-semibold mb-2">معرفی محصول:</h2>
           {description && (
             <div
               className="preview-content space-y-2 text-black"
