@@ -1,3 +1,4 @@
+// src\components\products\AddToCartButton.tsx
 "use client";
 import React, { useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -11,6 +12,7 @@ interface AddToCartResponse {
 
 interface AddToCartButtonProps {
   productId: string;
+  currectPath:string
 }
 
 const AddToCartButton: React.FC<AddToCartButtonProps> = ({ productId }) => {

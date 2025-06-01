@@ -7,9 +7,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { FormattedPostType } from "@/utils/types";
 import { calculatePercentage } from "@/utils/OfferMade";
+import { usePathname } from "next/navigation";
+// import AddToCartButton from "../products/AddToCartButton";
 
 // import { parse, differenceInDays } from "date-fns";
 const OfferProduct = ({ category }: { category: FormattedPostType[] }) => {
+const currectPath = usePathname()
+console.log(currectPath)
 
 const getDaysSinceCreation = (createdAt: string): string => {
   try {
@@ -126,14 +130,14 @@ const getDaysSinceCreation = (createdAt: string): string => {
                   </span>
                   <div className="  top-[50%] flex flex-col justify-center items-center mx-auto my-auto gap-2 text-lg font-medium">
                     <Link
-                      href={`/qhab/${itt.id}`}
+                      href={`/products/${itt.id}`}
                       className="p-2 w-full items-center justify-center flex rounded-md bg-sky-400 text-white"
                     >
                       اطلاعات محصول
                     </Link>
-                    <span className="p-2 flex rounded-md bg-[#cba6f2d0] text-white cursor-pointer">
-                      اضافه کردن به سبد
-                    </span>
+                    {/* <span className="p-2 flex rounded-md bg-[#cba6f2d0] text-white cursor-pointer">
+                     <AddToCartButton productId={itt.id} currectPath={currectPath}/>
+                    </span> */}
                   </div>
                   {/* </div> */}
                 </div>

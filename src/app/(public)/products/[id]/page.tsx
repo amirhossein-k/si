@@ -9,7 +9,6 @@ import Tabs from "@/components/TabsProduct/Tabs";
 import CurrentPath from "@/components/path/CurrentPath";
 import { calculatePercentage } from "@/utils/OfferMade";
 import { Rating, ThinStar } from "@smastrom/react-rating";
-
 // دریافت محصول بر اساس `slug`
 async function getProduct(id: string): Promise<FormattedPostType | null> {
   try {
@@ -31,7 +30,7 @@ export default async function ProductPage({
 }) {
   const { id } = await params;
   const product = await getProduct(id);
-
+  const currectPath = 'product'
   if (!product) notFound();
 
   // اعتبارسنجی تصاویر
@@ -48,6 +47,7 @@ export default async function ProductPage({
       ];
 
       console.log(product,'product')
+      
   return (
     <div className="p-6 " dir="rtl">
       <div className="nav">
@@ -126,7 +126,7 @@ export default async function ProductPage({
             </div>
           </div>
           <div className="buy">
-            <AddToCartButton productId={product.id} />
+            <AddToCartButton productId={product.id} currectPath={currectPath} />
           </div>
           <p className="text-gray-700">{product.published}</p>
 

@@ -1,19 +1,34 @@
 "use client";
-import React from "react";
+import React, { useContext, useEffect, useTransition } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Keyboard, Scrollbar, Navigation, Pagination } from "swiper/modules";
 import Image from "next/image";
-import Link from "next/link";
 // import { CATEGORYLayoutITEM } from "@/utils/types";
 import { calculateTimeDifference2 } from "../../../hooks/percent";
 import { FormattedPostType } from "@/utils/types";
 // import { calculatePercentage } from "@/utils/OfferMade";
 import { calculatePercentage } from "@/utils/OfferMade";
-
+import { useRouter } from 'next/navigation';
+import { UserContext } from "@/context/UserContext2";
 const OfferProduct = ({ category }: { category: FormattedPostType[] }) => {
   
-  console.log(category,'category offer')
-  console.log(calculateTimeDifference2("5/29/2025/23"), 'd')
+   const { setLoadingNav} = useContext(UserContext);
+  
+      // const { setLoadingNav } = useUserContext();
+            const [isPending,startTransition] = useTransition()  
+      
+        const router = useRouter()
+        const handlePush = (url:string) => {
+          setLoadingNav(true);
+          startTransition(() => {
+            router.push(`${url}`);
+          });
+        };
+        useEffect(() => {
+          if (!isPending) {
+            setLoadingNav(false);
+          }
+        }, [isPending, setLoadingNav]);
   return (
     <div
       className="flex flex-col sm:w-[95%] md:w-[95%] lg:w-[96%] m-auto h-[480px]  p-1 py-2 shadow-shadow-one "
@@ -26,7 +41,15 @@ const OfferProduct = ({ category }: { category: FormattedPostType[] }) => {
         </div>
         <div className="absolute bottom-2  border-b-[#cfcfcf] border-b-2    w-[95%]"></div>
         <div className="flex-1 flex justify-end  text-lg p-2 cursor-pointer ">
-          مشاهده همه محصولات
+        
+         <button
+           onClick={()=>handlePush(`products/list?category=&sort=new`)}
+            // href={item.link ?? ""}
+            // className="p-2 w-full items-center justify-center flex rounded-md bg-sky-400 text-white"
+            className="hover:text-[#249cc0] hover:font-bold"
+          >
+ مشاهده همه محصولات          </button>
+         
         </div>
       </div>
       <Swiper
@@ -88,15 +111,22 @@ const OfferProduct = ({ category }: { category: FormattedPostType[] }) => {
                     <i className="bi bi-heart text-2xl w-full text-white   hover:text-red-400"></i>
                   </span>
                   <div className="  top-[50%] flex flex-col justify-center items-center mx-auto my-auto gap-2 text-lg font-medium">
-                    <Link
-                      href={`/qhab/${itt.id}`}
+                    {/* <Link
+                      href={`/products/${itt.id}`}
                       className="p-2 w-full items-center justify-center flex rounded-md bg-sky-400 text-white"
                     >
                       اطلاعات محصول
-                    </Link>
-                    <span className="p-2 flex rounded-md bg-[#cba6f2d0] text-white cursor-pointer">
+                    </Link> */}
+                     <button
+           onClick={()=>handlePush(`/products/${itt.id}`)}
+            // href={item.link ?? ""}
+            className="p-2 w-full items-center justify-center flex rounded-md bg-sky-400 text-white"
+          >
+            اطلاعات محصول
+          </button>
+                    {/* <span className="p-2 flex rounded-md bg-[#cba6f2d0] text-white cursor-pointer">
                       اضافه کردن به سبد
-                    </span>
+                    </span> */}
                   </div>
                   {/* </div> */}
                 </div>
