@@ -67,6 +67,7 @@ export async function POST(request: Request) {
                 name: true,
                 email: true,
                 createdAt: true,
+                rating:true
               },
             },
           },
@@ -139,6 +140,7 @@ export async function POST(request: Request) {
         categoryList: post.categoryList,
         review: post.review,
         tags:post.tags,
+        
         // tableContent را فقط در صورتی اضافه کنید که وجود داشته باشد
     ...(post.tableContent && { tableContent: post.tableContent }),
       })),

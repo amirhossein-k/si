@@ -20,7 +20,7 @@ const categoryLayout: CATEGORYLayout[] = [
     item: [
       {
         id: '1',
-        link: '/products/list',
+        link: '/products/list?category=&sort=new&minPrice=0&maxPrice=500000&count=1&offer=1',
         pic: 'https://c961427.parspack.net/c961427/uploads/banner-10.jpg',
         title: 'قاب ها'
       },

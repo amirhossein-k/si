@@ -11,6 +11,7 @@ export interface GetProductParams {
   minPrice?: number;
   maxPrice?: number;
   count?: number;
+  offer?: number;
 }
 
 export async function GetProduct({
@@ -19,7 +20,8 @@ export async function GetProduct({
   page = 1,
   minPrice,
   maxPrice,
-  count
+  count,
+  offer
 }: GetProductParams) {
   const limit = 9;
   const skip = (page - 1) * limit;
@@ -49,6 +51,16 @@ export async function GetProduct({
   // - اگر available false باشد، count برابر 0 داشته باشند
     if (count !== undefined) {
       where.count = count
+    }
+
+    if (offer !== undefined) {
+      if(offer===0){
+       where.priceOffer={
+        some:{
+          priceOffer:0
+        }
+       }
+      }
     }
   
  

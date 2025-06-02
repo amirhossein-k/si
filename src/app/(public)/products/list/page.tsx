@@ -18,6 +18,7 @@ interface SearchParams {
   minPrice?: string;
   maxPrice?: string;
   count?: string;
+  offer?: string;
 }
 
 export const metadata: Metadata = {
@@ -36,6 +37,7 @@ export default async function ShopPage({ searchParams }: {
     minPrice,
     maxPrice,
     count,
+    offer
   } = await searchParams;
     console.log(count,'avalibale')
   const currentPage = page ? parseInt(page, 10) : 1;
@@ -46,6 +48,7 @@ export default async function ShopPage({ searchParams }: {
   const maxPriceNum = maxPrice ? Number(maxPrice) : undefined;
   // / تبدیل مقدار count به عدد. اگر count در URL موجود نباشد، undefined است.
   const countNum = count !== undefined ? Number(count) : undefined;
+  const countOffer = offer !== undefined ? Number(offer) : undefined;
   // دریافت محصولات و تعداد کل موارد بر اساس فیلترها
   const { products, totalCount } = await GetProduct({
     category,
@@ -54,6 +57,7 @@ export default async function ShopPage({ searchParams }: {
     minPrice: minPriceNum,
     maxPrice: maxPriceNum,
     count: countNum, // ارسال به صورت عددی,
+    offer: countOffer, // ارسال به صورت عددی,
   } as GetProductParams);
   const totalPages = Math.ceil(totalCount / limit);
 

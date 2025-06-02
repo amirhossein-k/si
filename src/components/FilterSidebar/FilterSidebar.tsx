@@ -10,6 +10,7 @@ import { SortOption } from '@/../actions/GetProductListOrder';
 import PriceFilter from '../products/PriceFilter';
 import AvailableFilter from '../AvailableFilter/AvailableFilter';
 import FilterParent from '../Filter/FilterParent';
+import OfferFilter from '../offerFilter/OfferFilter';
 
 interface FilterSidebarProps {
   selectedCategory?: string;
@@ -145,6 +146,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ selectedCategory, selecte
           </ul>
           <PriceFilter selectedCategory={selectedCategory} selectedSort={selectedSort?.toString()} />
           <AvailableFilter selectedCategory={selectedCategory} selectedSort={selectedSort?.toString()}/>
+          <OfferFilter selectedCategory={selectedCategory} selectedSort={selectedSort?.toString()}/>
 
         </div>
       )}
