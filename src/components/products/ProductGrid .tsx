@@ -1,13 +1,13 @@
 // components/products/ProductGrid.tsx
 'use client';
 import React from 'react';
-import { POSTTYPE } from '@/utils/types';
+import { FormattedPostType } from '@/utils/types';
 import ProductCard from './ProductCard';
 import { useLoading } from '@/context/LoadingContext';
 import { Spinner} from "@heroui/react";
 
 interface ProductGridProps {
-  products: POSTTYPE[];
+  products: FormattedPostType[];
 }
 
 const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
@@ -23,7 +23,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 ">
 
-        {products.map((product: POSTTYPE) => (
+        {products.map((product: FormattedPostType) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>

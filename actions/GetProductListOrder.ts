@@ -1,6 +1,8 @@
 // actions/GetProductListOrder.ts
 "use server";
 import prisma from '@/lib/db';
+import { FormattedPostType } from '@/utils/types';
+import { formatToGregorianDate } from './GetProductList';
 
 export type SortOption = 'new' | 'old' | 'cheap' | 'expensive';
 
@@ -94,12 +96,17 @@ export async function GetProduct({
         orderBy,
         skip,
         take: limit,
-        include: { productImage: true,categoryList:true ,review:true,listProperty:true},
+        include: { productImage: true,categoryList:true ,review:true,listProperty:true,},
       }),
       prisma.post.count({ where }),
     ]);
 
-    return { products, totalCount };
+      const formattedListProduct: FormattedPostType[] = products.map((product) => ({
+      ...product,
+      createdAt: formatToGregorianDate(product.createdAt),
+      updatedAt: formatToGregorianDate(product.updatedAt),
+    }));
+    return { products:formattedListProduct, totalCount };
   } catch (error) {
     console.error(error, 'خطا در دریافت لیست محصولات');
     throw new Error('خطا در سرور');
