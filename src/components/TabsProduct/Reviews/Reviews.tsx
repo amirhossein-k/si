@@ -1,4 +1,3 @@
-// src\components\TabsProduct\Reviews\Reviews.tsx
 'use client';
 import React, { useState } from 'react';
 import { Spinner } from '@heroui/react';
@@ -8,8 +7,9 @@ import Link from 'next/link';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { revalidateProductPage } from '../../../../actions/productRefresh';
-import { Rating, ThinStar } from "@smastrom/react-rating";
-import "@smastrom/react-rating/style.css";
+import { Rating, ThinStar } from '@smastrom/react-rating';
+import '@smastrom/react-rating/style.css';
+
 interface PropsReview {
   id: string;
 }
@@ -20,7 +20,7 @@ interface Review {
   name: string;
   email: string;
   createdAt: string;
-  rating:number
+  rating: number;
 }
 
 // تابع دریافت لیست نظرات
@@ -40,8 +40,7 @@ const addReview = async (reviewData: {
   name: string;
   email: string;
   reviewText: string;
-    rating:number
-
+  rating: number;
 }): Promise<Review> => {
   const res = await fetch('/api/products/review/add', {
     method: 'POST',
@@ -69,17 +68,18 @@ const deleteReview = async (reviewId: string): Promise<void> => {
 };
 
 const Reviews = ({ id }: PropsReview) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { user, loading } = useUserContext();
   const queryClient = useQueryClient();
   const [text, setText] = useState<string>('');
-  const [rating, setRating] = useState<number>(0); // حالت برای امتیاز
+  const [rating, setRating] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
 
   // دریافت لیست نظرات
   const { data: reviews, isLoading: isReviewsLoading } = useQuery({
     queryKey: ['reviews', id],
     queryFn: () => fetchReviews(id),
-    staleTime: 60 * 1000, // کش برای 1 دقیقه
+    staleTime: 60 * 1000,
   });
 
   // ارسال نظر
@@ -98,17 +98,17 @@ const Reviews = ({ id }: PropsReview) => {
       ]);
       return { previousReviews };
     },
-    onSuccess: async() => {
+    onSuccess: async () => {
       toast.success('نظر شما با موفقیت ثبت شد');
       setText('');
-      setRating(0)
+      setRating(0);
       queryClient.invalidateQueries({ queryKey: ['reviews', id] });
-      // فراخوانی Server Action برای به‌روزرسانی کش محصول
       const result = await revalidateProductPage(id);
       if (result && !result.success) {
         toast.error(result.error || 'خطا در به‌روزرسانی صفحه');
       }
-    },    onError: (err, _, context) => {
+    },
+    onError: (err, _, context) => {
       setError(err.message || 'خطا در ارسال نظر');
       queryClient.setQueryData(['reviews', id], context?.previousReviews);
       toast.error('خطا در ارسال نظر');
@@ -129,7 +129,7 @@ const Reviews = ({ id }: PropsReview) => {
       );
       return { previousReviews };
     },
-    onSuccess: async() => {
+    onSuccess: async () => {
       toast.success('نظر با موفقیت حذف شد');
       const result = await revalidateProductPage(id);
       if (result && !result.success) {
@@ -156,6 +156,10 @@ const Reviews = ({ id }: PropsReview) => {
       setError('لطفاً متن نظر را وارد کنید.');
       return;
     }
+    if (rating === 0) {
+      setError('لطفاً امتیاز خود را انتخاب کنید.');
+      return;
+    }
 
     setError(null);
     addMutation.mutate({
@@ -173,23 +177,11 @@ const Reviews = ({ id }: PropsReview) => {
     }
   };
 
-  if (loading || isReviewsLoading) {
+  if (isReviewsLoading) {
     return (
       <div className="flex justify-center">
         <Spinner classNames={{ label: 'text-foreground mt-4' }} label="لطفا صبر کنید" variant="simple" />
       </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <p className="text-red-500 text-center">
-        برای ثبت نظر، لطفاً ابتدا{' '}
-        <Link href={'/login'} className="mx-1 font-medium text-black">
-          وارد حساب کاربری
-        </Link>{' '}
-        خود شوید.
-      </p>
     );
   }
 
@@ -198,8 +190,6 @@ const Reviews = ({ id }: PropsReview) => {
       <h1 className="comments-title text-base text-[#262626] mb-4">
         نظرات ({reviews?.length || 0})
       </h1>
-
-      {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
       {reviews && reviews.length > 0 ? (
         reviews.map((review) => (
@@ -225,15 +215,15 @@ const Reviews = ({ id }: PropsReview) => {
                 {new Date(review.createdAt).toLocaleString('fa-IR')}
               </span>
               <div className="mb-2">
-               <Rating
+                <Rating
                   style={{ maxWidth: 100 }}
                   value={review.rating}
                   readOnly
                   itemStyles={{
                     itemStrokeWidth: 2,
-                    activeFillColor: "#f1a545",
-                    activeStrokeColor: "#d3d3d3", // اصلاح شده
-                    itemShapes:ThinStar
+                    activeFillColor: '#f1a545',
+                    activeStrokeColor: '#d3d3d3',
+                    itemShapes: ThinStar,
                   }}
                 />
               </div>
@@ -241,7 +231,7 @@ const Reviews = ({ id }: PropsReview) => {
                 {review.reviewText}
               </p>
             </div>
-            {user.admin && (
+            {user?.admin && (
               <button
                 onClick={() => handleDelete(review.id)}
                 className="absolute top-2 left-2 text-red-500 hover:text-red-700 text-sm"
@@ -257,68 +247,79 @@ const Reviews = ({ id }: PropsReview) => {
         <p className="text-gray-500 text-center">هنوز نظری ثبت نشده است.</p>
       )}
 
-      <form className="form-block mt-6" onSubmit={handleSubmit}>
-        <div className="row">
-          <div className="col-xs-12 col-sm-6">
-            <div className="form-group fl_icon my-2">
-              <div className="icon">
-                <i className="fa fa-user"></i>
+      {user ? (
+        <form className="form-block mt-6" onSubmit={handleSubmit}>
+          <div className="row">
+            <div className="col-xs-12 col-sm-6">
+              <div className="form-group fl_icon my-2">
+                <div className="icon">
+                  <i className="fa fa-user"></i>
+                </div>
+                <input
+                  type="text"
+                  value={user.name || ''}
+                  placeholder="نام خود را وارد کنید"
+                  className="w-full p-2 border rounded"
+                  disabled
+                />
               </div>
-              <input
-                type="text"
-                value={user.name || ''}
-                placeholder="نام خود را وارد کنید"
-                className="w-full p-2 border rounded"
-                disabled
-              />
             </div>
-          </div>
-          <div className="col-xs-12 col-sm-6 fl_icon">
-            <div className="form-group fl_icon my-2">
-              <input
-                type="text"
-                value={user.email || ''}
-                placeholder="ایمیل خود را وارد کنید"
-                className="w-full p-2 border rounded"
-                disabled
-              />
+            <div className="col-xs-12 col-sm-6 fl_icon">
+              <div className="form-group fl_icon my-2">
+                <input
+                  type="text"
+                  value={user.email || ''}
+                  placeholder="ایمیل خود را وارد کنید"
+                  className="w-full p-2 border rounded"
+                  disabled
+                />
+              </div>
             </div>
-          </div>
-          <div className="col-xs-12 my-2">
-            <div className="form-group">
-              <label className="block mb-2">امتیاز شما:</label>
-             <Rating
-                style={{ maxWidth: 150 }}
-                value={rating}
-                onChange={setRating}
-                itemStyles={{
-                  itemShapes: ThinStar, // اضافه کردن شکل ستاره
-                  itemStrokeWidth: 2,
-                  activeFillColor: "#f1a545",
-                  activeStrokeColor: "#d3d3d3",
-                }}
-              />
+            <div className="col-xs-12 my-2">
+              <div className="form-group">
+                <label className="block mb-2">امتیاز شما:</label>
+                <Rating
+                  style={{ maxWidth: 150 }}
+                  value={rating}
+                  onChange={setRating}
+                  itemStyles={{
+                    itemShapes: ThinStar,
+                    itemStrokeWidth: 2,
+                    activeFillColor: '#f1a545',
+                    activeStrokeColor: '#d3d3d3',
+                  }}
+                />
+              </div>
             </div>
-          </div>
-          <div className="col-xs-12 my-2">
-            <div className="form-group">
-              <textarea
-                className="form-input h-[150px] text-sm font-normal text-[#b4b7c1] w-full pl-5 pt-2 pr-5 border border-[#edeff2] rounded"
-                placeholder="نظر خود را بنویسید"
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-              />
+            <div className="col-xs-12 my-2">
+              <div className="form-group">
+                <textarea
+                  className="form-input h-[150px] text-sm font-normal text-[#b4b7c1] w-full pl-5 pt-2 pr-5 border border-[#edeff2] rounded"
+                  placeholder="نظر خود را بنویسید"
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                />
+              </div>
             </div>
+            {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+              disabled={addMutation.isPending}
+            >
+              {addMutation.isPending ? 'در حال ارسال...' : 'افزودن نظر'}
+            </button>
           </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-50"
-            disabled={addMutation.isPending}
-          >
-            {addMutation.isPending ? 'در حال ارسال...' : 'افزودن نظر'}
-          </button>
-        </div>
-      </form>
+        </form>
+      ) : (
+        <p className="text-red-500 text-center mt-6">
+          برای ثبت نظر، لطفاً ابتدا{' '}
+          <Link href={'/login'} className="mx-1 font-medium text-black">
+            وارد حساب کاربری
+          </Link>{' '}
+          خود شوید.
+        </p>
+      )}
     </div>
   );
 };
