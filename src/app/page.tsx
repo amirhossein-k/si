@@ -12,6 +12,7 @@ import OfferProduct from "@/components/offerProduct/OfferProduct";
 import SpinnersNav from "@/components/products/SpinnerNav";
 import Footer from "./components/footer/Footer";
 import { GetNewProducts, GetProductOffer } from "../../actions/GetProductList";
+import CommentVisit from "@/components/commentvisitor/CommentVisit";
 
 const categoryLayout: CATEGORYLayout[] = [
   {
@@ -122,7 +123,7 @@ export default async function Home() {
   return (
     <div className="">
              <SpinnersNav/>
-
+<CommentVisit/>
       <LayoutFirst size="first">
         <>
           {categoryLayout
