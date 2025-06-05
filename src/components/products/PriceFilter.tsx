@@ -44,7 +44,7 @@ const PriceFilter: React.FC<PriceFilterProps> = ({ selectedCategory, selectedSor
       <div className="subtitle  group-hover:flex flex-col hidden p-2">
       <Slider
         minValue={0}
-        maxValue={50000}
+        maxValue={5000000}
         step={10}
         defaultValue={priceRange}
         onChange={(value: number | number[]) => {

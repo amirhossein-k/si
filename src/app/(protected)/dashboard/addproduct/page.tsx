@@ -63,10 +63,10 @@ const useNavigationGuard = (shouldWarn: boolean) => {
 };
 
 const categories = [
-  { key: "electronics", label: "الکترونیک" },
-  { key: "fashion", label: "فشن" },
-  { key: "books", label: "کتاب" },
-  { key: "home", label: "خانه" },
+  { key: "lavazemKhane", label: "لوازم خانه" },
+  { key: "mobile", label: "موبایل" },
+  { key: "dekori", label: "لوازم دکوری" },
+  { key: "qhab", label: "قاب ها" },
 ];
 
 export default function AddProduct() {

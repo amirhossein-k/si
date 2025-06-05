@@ -68,6 +68,10 @@ export async function GetProduct({
           priceOffer:0
         }
        }
+      // }else if(offer===2){
+      //   where.published=true
+       
+      // }
       }
     }
   

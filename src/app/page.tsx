@@ -14,6 +14,7 @@ import Footer from "./components/footer/Footer";
 import { GetNewProducts, GetProductOffer } from "../../actions/GetProductList";
 import CommentVisit from "@/components/commentvisitor/CommentVisit";
 
+
 const categoryLayout: CATEGORYLayout[] = [
   {
     id: '',
@@ -21,27 +22,27 @@ const categoryLayout: CATEGORYLayout[] = [
     item: [
       {
         id: '1',
-        link: '/products/list?category=&sort=new&minPrice=0&maxPrice=500000&count=1&offer=1',
+        link: '/products/list?category=qhab&sort=new&minPrice=0&maxPrice=5000000&count=1',
         pic: 'https://c961427.parspack.net/c961427/uploads/banner-10.jpg',
         title: 'قاب ها'
       },
       {
         id: '4',
-        link: '/qhab',
-        pic: 'https://c961427.parspack.net/c961427/uploads/banner-11.jpg',
-        title: 'قاب ها'
+        link: '/products/list?category=lavazemKhaneqhab&sort=new&minPrice=0&maxPrice=5000000&count=1',
+        pic: 'https://c713657.parspack.net/c713657/uploads/banner-12%20%281%29%20copyaaaa.jpg',
+        title: ' لوازم خانه'
       },
       {
         id: '2',
-        link: '/kif',
+        link: '/products/list?category=dekori&sort=new&minPrice=0&maxPrice=5000000&count=1',
         pic: 'https://c961427.parspack.net/c961427/uploads/banner-12.jpg',
-        title: 'کیف ها'
+        title: 'لوازم دکوری '
       },
       {
         id: '3',
-        link: '/ecsessory',
-        pic: 'https://c961427.parspack.net/c961427/uploads/banner-13.jpg',
-        title: 'اکسسوری'
+        link: '/products/list?category=mobile&sort=new&minPrice=0&maxPrice=5000000&count=1',
+        pic: 'https://c961427.parspack.net/c961427/uploads/banner-11.jpg',
+        title: 'موبایل'
       },
     ],
   },

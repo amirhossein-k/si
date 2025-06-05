@@ -17,7 +17,14 @@ interface FilterSidebarProps {
   selectedSort?: SortOption;
 }
 
-const categories: string[] = ['electronics', 'fashion', 'books', 'home'];
+
+const categories = [
+  { key: "lavazemKhane", label: "لوازم خانه" },
+  { key: "mobile", label: "موبایل" },
+  { key: "dekori", label: "لوازم دکوری" },
+  { key: "qhab", label: "قاب ها" },
+];
+// const categories: string[] = ['lavazemKhane', 'mobile', 'dekori', 'qhab'];
 
 const FilterSidebar: React.FC<FilterSidebarProps> = ({ selectedCategory, selectedSort }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -88,7 +95,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ selectedCategory, selecte
           <FilterParent title_Filter="فیلتر  دسته بندی محصولات " />
           <div className="subtitle  group-hover:flex flex-col hidden p-2">
             {categories.map((cat) => (
-              <li key={cat} className="mb-2">
+              <li key={cat.key} className="mb-2">
                   <div className="category  text-black flex gap-4 p-3 text-lg bg-[#f3f2f2a1] rounded-md">
                 {/* <Link href={`/products/list?category=${cat}&sort=${selectedSort || 'new'}`}>
                   <span className={selectedCategory === cat ? 'text-blue-600 font-semibold' : 'cursor-pointer'}>
@@ -96,10 +103,10 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ selectedCategory, selecte
                   </span>
                 </Link> */}
                 <button 
-                  onClick={() => handleNavigation(`/products/list?category=${cat}&sort=${selectedSort || 'new'}`)}
-                  className={selectedCategory === cat ? 'text-blue-600 font-semibold' : 'cursor-pointer w-full'}
+                  onClick={() => handleNavigation(`/products/list?category=${cat.key}&sort=${selectedSort || 'new'}`)}
+                  className={selectedCategory === cat.key ? 'text-blue-600 font-semibold' : 'cursor-pointer w-full'}
                 >
-                  {cat}
+                  {cat.label}
                   
                 
                   
@@ -124,7 +131,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ selectedCategory, selecte
            <FilterParent title_Filter="فیلتر  دسته بندی محصولات " />
            <div className="subtitle  group-hover:flex flex-col hidden p-2 w-full">
             {categories.map((cat) => (
-              <li key={cat} className="mb-2 w-full ">
+              <li key={cat.key} className="mb-2 w-full ">
                  <div className="category  w-full text-black flex gap-4 p-3 text-lg bg-[#f3f2f2a1] rounded-md">
                 {/* <Link href={`/products/list?category=${cat}&sort=${selectedSort || 'new'}`}>
                   <span className={selectedCategory === cat ? 'text-blue-600 font-semibold' : 'cursor-pointer'}>
@@ -132,10 +139,10 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({ selectedCategory, selecte
                   </span>
                 </Link> */}
                 <button 
-                  onClick={() => handleNavigation(`/products/list?category=${cat}&sort=${selectedSort || 'new'}`)}
-                  className={selectedCategory === cat ? 'text-blue-600 font-semibold' : 'cursor-pointer w-full'}
+                  onClick={() => handleNavigation(`/products/list?category=${cat.key}&sort=${selectedSort || 'new'}`)}
+                  className={selectedCategory === cat.key ? 'text-blue-600 font-semibold' : 'cursor-pointer w-full'}
                 >
-                  {cat}
+                  {cat.label}
                   {/* {isPending && <span className="ml-2">Loading...</span>} */}
                 </button>
                 </div>
