@@ -36,11 +36,19 @@ import { GetProduct } from '../../../../actions/GetProductList'
 import { FormattedPostType } from '@/utils/types'
 
 export default async function ProductsPage() {
-  // const products:Post[] = await getProducts();
-  const data: Response = await GetProduct();
-
-  const products: FormattedPostType[] = await data.json();
-
+ let products: FormattedPostType[] = [];
+  try {
+    const data: Response = await GetProduct();
+    const result = await data.json();
+    // بررسی اینکه آیا result یک آرایه است
+    if (Array.isArray(result)) {
+      products = result;
+    } else {
+      console.error('GetProduct did not return an array:', result);
+    }
+  } catch (error) {
+    console.error('Error fetching products:', error);
+  }
 
   return (
     <div className="container mx-auto p-4">
