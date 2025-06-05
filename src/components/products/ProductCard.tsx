@@ -48,7 +48,7 @@ export default function ProductCard({ product }: { product:FormattedPostType }) 
         className="w-full h-48 object-cover mb-4 rounded-md"
       />
    <div className="body">
-   <h1 className='text-xl'>{product.title}</h1>
+   <h1 className='text-xl truncate' >{product.title}</h1>
       {product.count!==0&& renderCountStatus(product.countproduct.toString())}
 
       {/* <div className="count_less text-red-300">تنها1عدد در انبار باقی مانده</div> */}

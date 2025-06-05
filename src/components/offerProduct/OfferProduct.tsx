@@ -152,7 +152,7 @@ const OfferProduct = ({ category }: { category: FormattedPostType[] }) => {
                   />
                 </div>
                 <div className="w-full h-[25%] flex  flex-col  p-2 mb-5">
-                  <div className="title flex-1 text-lg">{itt.title}</div>
+                  <div className="title flex-1 truncate text-lg">{itt.title}</div>
                   <div className="buy_text">
             <p className="mt-2 text-lg font-semibold">
               {itt.priceOffer !== 0 ? (

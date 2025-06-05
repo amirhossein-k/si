@@ -64,7 +64,7 @@ export default async function ShopPage({ searchParams }: {
   return (
     <div className="container mx-auto px-4 py-8 " dir="rtl">
       {/* صفحه ای که هستی را نشان میدهد */}
-      <CurrentPath productId={""} />
+      <CurrentPath productId={""} cat={category || ""} />
       {/* loading  در بخش بالای صفحه در صورت کلیک روی محصول یا دکمه ها به نمایش در می اورد */}
       <Spinners />
 

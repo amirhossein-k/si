@@ -1,15 +1,36 @@
 // components/Navigation.tsx
 'use client';
-import React, { useTransition } from 'react';
+import React, {  useTransition } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useLoading } from '@/context/LoadingContext';
 
 interface NavigationProps {
   productId: string;
+  cat:string
 }
 
-export default function CurrentPath({ productId }: NavigationProps) {
+const catName = (catEn:string):string =>{
+  switch(catEn){
+    case 'lavazemKhane':
+      return 'لوازم خانگی'
+    case "mobile":
+      return "موبایل"
+    case "dekori":
+      return  "لوازم دکوری"
+    case "qhab":
+      return "قاب ها"
+    
+    default:
+      return ''
+  }
+  
+
+
+
+}
+
+export default function CurrentPath({ productId ,cat}: NavigationProps) {
   const pathname = usePathname() || "/";
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { setIsLoadingNavId,isLoadingNavId } = useLoading();
@@ -23,6 +44,7 @@ export default function CurrentPath({ productId }: NavigationProps) {
           router.push(`${url}`);
         });
       };
+      
   return (
     <div className="flex shadow-card  gap-3 text-md mb-6" dir='rtl'>
       <button 
@@ -34,7 +56,18 @@ export default function CurrentPath({ productId }: NavigationProps) {
       <button 
       onClick={()=>handlePush('/products/list')}
       className="hover:text-black text-blue-400">
-          قاب ها
+        محصولات
+      </button>
+      <div>--</div>
+      <button
+        onClick={() => {
+          const url = `/products/list?category=${cat}&sort=new`;
+          console.log('Button clicked, URL:', url);
+          handlePush(url);
+        }}
+        className="hover:text-black text-blue-400"
+      >
+        {catName(cat)}
       </button>
       {/* <Link href="/products/list" className="hover:text-black text-blue-400">
         قاب ها

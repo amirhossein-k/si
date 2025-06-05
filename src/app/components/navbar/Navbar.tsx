@@ -129,32 +129,22 @@ const Navbar = () => {
                 <span className="mr-1">دسته بندی کالاها</span>
               </button>
               <ul
-                className={`${styles.dropdown_menu} dropdown_menu md:absolute hidden text-gray-700 pt-1 w-full`}
+                className={`${styles.dropdown_menu} dropdown_menu md:absolute hidden text-gray-700 pt-1 w-[200px]`}
               >
                 <li>
-                  <a
-                    className="rounded-t bg-[#263C97] text-white hover:bg-gray-200 hover:text-sky-500 py-2 px-4 block whitespace-no-wrap"
-                    href="#"
-                  >
-                    One
-                  </a>
+                   <button onClick={() => navigateWithLoading('/products/list?category=qhab&sort=new')}   className="rounded-t w-full bg-[#263C97] text-white hover:bg-gray-200 hover:text-sky-500 py-2 px-4 block whitespace-no-wrap"
+                    >  قاب ها </button>
+                 
                 </li>
                 <li>
-                  <a
-                    className="bg-[#263C97] text-white hover:bg-gray-200 hover:text-sky-500 py-2 px-4 block whitespace-no-wrap"
-                    href="#"
-                  >
-                    One
-                  </a>
+                    <button onClick={() => navigateWithLoading('/products/list?category=dekori${cat}&sort=new')}   className="rounded-t  w-full bg-[#263C97] text-white hover:bg-gray-200 hover:text-sky-500 py-2 px-4 block whitespace-no-wrap"
+                    >   لوازم دکوری  </button>
                 </li>
                 <li>
-                  <a
-                    className="rounded-b bg-[#263C97] text-white hover:bg-gray-200 hover:text-sky-500 py-2 px-4 block whitespace-no-wrap"
-                    href="#"
-                  >
-                    One
-                  </a>
+                   <button onClick={() => navigateWithLoading('/products/list?category=mobile${cat}&sort=new')}   className="rounded-t w-full bg-[#263C97] text-white hover:bg-gray-200 hover:text-sky-500 py-2 px-4 block whitespace-no-wrap"
+                    >  موبایل</button>
                 </li>
+                
               </ul>
             </div>
           </li>

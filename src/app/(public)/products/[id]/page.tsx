@@ -51,7 +51,7 @@ export default async function ProductPage({
   return (
     <div className="p-6 " dir="rtl">
       <div className="nav">
-        <CurrentPath productId={product.id} />
+        <CurrentPath productId={product.id}  cat={product.categoryList[0].category || ""} />
       </div>
       <div className="top flex xl:flex-row flex-col gap-3">
         <div className="images xl:w-[40%] w-full h-full flex justify-center items-center md:my-0">

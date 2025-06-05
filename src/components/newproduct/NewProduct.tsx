@@ -172,7 +172,7 @@ const getDaysSinceCreation = (createdAt: string): string => {
                   />
                 </div>
                 <div className="w-full h-[25%] flex  flex-col  p-2">
-                  <div className="title flex-1 text-lg">{itt.title}</div>
+                  <div className="title truncate flex-1 text-lg">{itt.title}</div>
                   {/* <div className="price flex-1 text-lg" dir="ltr">
                    
                   </div> */}
