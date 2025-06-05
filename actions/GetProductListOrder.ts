@@ -2,9 +2,15 @@
 "use server";
 import prisma from '@/lib/db';
 import { FormattedPostType } from '@/utils/types';
-import { formatToGregorianDate } from './GetProductList';
+import { format } from 'date-fns';
 
 export type SortOption = 'new' | 'old' | 'cheap' | 'expensive';
+
+// تابع کمکی برای تبدیل تاریخ به فرمت میلادی
+ function formatToGregorianDate(date: Date): string {
+  return format(date, 'MM/dd/yyyy/HH');
+}
+
 
 export interface GetProductParams {
   category?: string;

@@ -11,7 +11,7 @@ interface FormattedPostType extends Omit<POSTTYPE, 'createdAt' | 'updatedAt'> {
   updatedAt: string;
 }
 // تابع کمکی برای تبدیل تاریخ به فرمت میلادی
-export function formatToGregorianDate(date: Date): string {
+ function formatToGregorianDate(date: Date): string {
   return format(date, 'MM/dd/yyyy/HH');
 }
 export async function GetProduct() {
