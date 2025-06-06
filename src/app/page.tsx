@@ -13,6 +13,7 @@ import SpinnersNav from "@/components/products/SpinnerNav";
 import Footer from "./components/footer/Footer";
 import { GetNewProducts, GetProductOffer } from "../../actions/GetProductList";
 import CommentVisit from "@/components/commentvisitor/CommentVisit";
+import PropertySite from "@/components/propertySite/PropertySite";
 
 
 const categoryLayout: CATEGORYLayout[] = [
@@ -153,6 +154,9 @@ export default async function Home() {
       </Layout>
       <Layout size={'offer'} >
         <NewProduct category={newProducts || []}/>
+      </Layout>
+      <Layout size={'offer'} >
+        <PropertySite category={newProducts || []}/>
       </Layout>
         
       

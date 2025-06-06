@@ -24,6 +24,8 @@ export default {
       },
       boxShadow: {
         card: "0 0 30px #00000048",
+        propvist_b:"0px 19px 50px -31px rgba(0, 0, 0, 0.3)",
+         propvist_t:"0px -16px 36px -6px rgba(0, 0, 0, 0.3)"
       },
     },
   },
