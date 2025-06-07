@@ -3,6 +3,7 @@
 import { FormattedPostType } from "@/utils/types";
 import Image from "next/image";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const PropertySite = ({ category }: { category: FormattedPostType[] }) => {
   return (
     <div className="flex md:w-[80%]  lg:w-[58%] xl:w-[50%] w-[100%] mx-auto flex-row my-4 mb-5 ">
