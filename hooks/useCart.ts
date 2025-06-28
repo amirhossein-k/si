@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 
-const fetchCart = async () => {
+const Cart = async () => {
     const res = await fetch("/api/cart");
     const data = await res.json();
 
